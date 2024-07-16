@@ -1,7 +1,9 @@
+import Navbar from "./components/Navbar";
+
 function App() {
   return (
     <div>
-      <h1 className="text-5xl">Ecommerce website</h1>
+      <Navbar />
     </div>
   );
 }
