@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { useAuth } from "../services/authService";
 import { UserRound, LayoutDashboard, Settings, LogOut } from "lucide-react";
 
 const Profile = () => {
+  const { logout } = useAuth();
   const [toggleMenu, setToggleMenu] = useState(false);
   const menuRef = useRef(null);
 
@@ -55,6 +57,7 @@ const Profile = () => {
               <Settings size={18} className="mr-2" /> Settings
             </a>
             <a
+              onClick={logout}
               href="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
