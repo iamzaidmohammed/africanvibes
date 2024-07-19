@@ -1,8 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { UserRound, LayoutDashboard, Settings, LogOut } from "lucide-react";
 
 const Profile = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setToggleMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
+
   return (
     <>
       <div
@@ -13,9 +29,10 @@ const Profile = () => {
       </div>
 
       <div
+        ref={menuRef}
         className={`fixed top-20 -mt-1 right-3 z-40 w-80 bg-gray-100 overflow-hidden flex-col gap-12  origin-top duration-700 ${
           !toggleMenu ? "h-0" : "h-44"
-        } xl:right-36`}
+        } xl:right-20`}
       >
         <div className="px-5 pt-1">
           <div className="flex flex-col items-center font-bold tracking-wider pt-1">

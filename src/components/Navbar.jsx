@@ -1,20 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import { Menu, ShoppingCart, Search, Heart } from "lucide-react";
 import Logo from "../assets/logo.png";
 import Profile from "./Profile";
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
+  const linkClass = ({ isActive }) =>
+    isActive
+      ? "py-2 px-4 bg-secondary hover:bg-secondary"
+      : "py-2 px-4 hover:bg-secondary";
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setToggleMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
 
   return (
-    <nav>
-      <div className="max-w-7xl flex items-center xl:mx-auto">
+    <nav className="sticky top-0 z-50 bg-white shadow-sm">
+      <div className="max-w-7xl flex items-center lg:px-16 xl:mx-auto">
         <div className="flex justify-between items-center w-full px-5 ">
           {/* Primary menu and logo */}
           <div className="flex items-center gap-16 my-2">
             {/* logo */}
             <div>
-              <a
+              <NavLink
                 href="/"
                 className="flex gap-1 font-bold text-gray-700 items-center "
               >
@@ -23,34 +43,34 @@ const Navbar = () => {
                   style={{ width: "150px" }}
                   alt="African vibes logo"
                 />
-              </a>
+              </NavLink>
             </div>
 
             <div className="hidden md:flex gap-8 ">
-              <a href="/" className="py-2 px-4 hover:bg-secondary">
+              <NavLink to="/" className={linkClass}>
                 Home
-              </a>
-              <a href="#" className="py-2 px-4 hover:bg-secondary">
+              </NavLink>
+              <NavLink to="/shop" className={linkClass}>
                 Shop
-              </a>
-              <a href="#" className="py-2 px-4 hover:bg-secondary">
+              </NavLink>
+              <NavLink to="/blog" className={linkClass}>
                 Blog
-              </a>
-              <a href="#" className="py-2 px-4 hover:bg-secondary">
+              </NavLink>
+              <NavLink to="/contact" className={linkClass}>
                 Contact Us
-              </a>
+              </NavLink>
             </div>
           </div>
 
           <div className="flex items-center gap-6">
             <div className="hidden xs:flex items-center gap-10">
               <div className="hidden md:flex items-center gap-2">
-                <a
-                  href="#"
+                <NavLink
+                  to="#"
                   className="w-full py-2 px-4 bg-secondary text-center hover:bg-red-300"
                 >
                   Shop Now
-                </a>
+                </NavLink>
               </div>
             </div>
 
@@ -76,27 +96,31 @@ const Navbar = () => {
 
       {/* mobile navigation */}
       <div
+        ref={menuRef}
         className={`fixed right-3 z-40 w-80 bg-gray-100 overflow-hidden flex flex-col lg:hidden gap-12  origin-top duration-700  ${
           !toggleMenu ? "h-0" : "h-56"
         }`}
       >
         <div className="px-5 pt-1">
           <div className="flex flex-col items-center font-bold tracking-wider pt-1">
-            <a href="/" className="w-full py-2 px-4 hover:bg-secondary">
+            <NavLink to="/" className="w-full py-2 px-4 hover:bg-secondary">
               Home
-            </a>
-            <a href="#" className="w-full py-2 px-4 hover:bg-secondary">
+            </NavLink>
+            <NavLink to="#" className="w-full py-2 px-4 hover:bg-secondary">
               Shop
-            </a>
-            <a href="#" className="w-full py-2 px-4 hover:bg-secondary">
+            </NavLink>
+            <NavLink to="#" className="w-full py-2 px-4 hover:bg-secondary">
               Blog
-            </a>
-            <a href="#" className="w-full py-2 px-4 hover:bg-secondary">
+            </NavLink>
+            <NavLink to="#" className="w-full py-2 px-4 hover:bg-secondary">
               Contact Us
-            </a>
-            <a href="#" className="w-full py-2 px-4 bg-secondary text-center">
+            </NavLink>
+            <NavLink
+              to="#"
+              className="w-full py-2 px-4 bg-secondary text-center"
+            >
               Shop Now
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>
