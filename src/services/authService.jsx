@@ -21,27 +21,34 @@ export const AuthProvider = ({ children }) => {
     }
   }, [user]);
 
-  const signup = async (name, email, password) => {
+  const signup = async (name, email, password, confirmPassword) => {
     try {
       const response = await fetch("/api/routes/auth.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ action: "signup", name, email, password }),
+        body: JSON.stringify({
+          action: "signup",
+          name,
+          email,
+          password,
+          confirmPassword,
+        }),
       });
 
       const data = await response.json();
 
       if (data.status === "success") {
         setUser(data.user);
-        return true;
+        return { success: true };
+      } else {
+        return { success: false, message: data.message };
       }
     } catch (error) {
       console.error("Sign Up Error:", error);
+      return { success: false, message: "An error occurred during signup." };
     }
-
-    return false;
   };
 
   const signin = async (email, password) => {
@@ -58,13 +65,14 @@ export const AuthProvider = ({ children }) => {
 
       if (data.status === "success") {
         setUser(data.user);
-        return true;
+        return { success: true };
+      } else {
+        return { success: false, message: data.message };
       }
     } catch (error) {
       console.error("Sign In Error:", error);
+      return { success: false, message: "An error occurred during signin." };
     }
-
-    return false;
   };
 
   const logout = () => {

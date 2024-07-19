@@ -7,33 +7,37 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await signin(email, password);
-    if (success) {
+    const result = await signin(email, password);
+    setMessage(result.message);
+    if (result.success) {
+      // await signin(email, password);
       navigate("/", { replace: true });
-    } else {
-      alert("Sign in failed");
     }
   };
 
   return (
-    <form method="post" onSubmit={handleSubmit}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Sign In</button>
-    </form>
+    <>
+      <form method="post" onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Sign In</button>
+      </form>
+      {message && <p>{message}</p>}
+    </>
   );
 };
 
