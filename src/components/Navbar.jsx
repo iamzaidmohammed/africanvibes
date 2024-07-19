@@ -67,7 +67,7 @@ const Navbar = () => {
               <div className="hidden md:flex items-center gap-2">
                 <NavLink
                   to="#"
-                  className="w-full py-2 px-4 bg-secondary text-center hover:bg-red-300"
+                  className="w-full py-2 px-4 bg-secondary text-center"
                 >
                   Shop Now
                 </NavLink>
@@ -76,9 +76,9 @@ const Navbar = () => {
 
             {/* Mobile navigation toggle */}
             <div className="flex items-center gap-4">
-              <Search className="hidden sm:block" size={22} />
-              <Heart className="hidden sm:block" size={22} />
-              <ShoppingCart size={22} />
+              <Search className="hidden sm:block cursor-pointer" size={22} />
+              <Heart className="hidden sm:block cursor-pointer" size={22} />
+              <ShoppingCart className="cursor-pointer" size={22} />
 
               <Profile />
 
