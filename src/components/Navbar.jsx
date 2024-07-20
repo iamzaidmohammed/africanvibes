@@ -3,14 +3,17 @@ import { NavLink } from "react-router-dom";
 import { Menu, ShoppingCart, Search, Heart } from "lucide-react";
 import Logo from "../assets/logo.png";
 import Profile from "./Profile";
+import { useAuth } from "../services/authService";
 
 const Navbar = () => {
+  const { user } = useAuth();
   const [toggleMenu, setToggleMenu] = useState(false);
+  const menuRef = useRef(null);
+
   const linkClass = ({ isActive }) =>
     isActive
       ? "py-2 px-4 bg-secondary hover:bg-secondary"
       : "py-2 px-4 hover:bg-secondary";
-  const menuRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -63,33 +66,49 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-6">
-            <div className="hidden xs:flex items-center gap-10">
-              <div className="hidden md:flex items-center gap-2">
-                <NavLink
-                  to="#"
-                  className="w-full py-2 px-4 bg-secondary text-center"
-                >
-                  Shop Now
-                </NavLink>
+            {!user ? (
+              ""
+            ) : (
+              <div className="hidden xs:flex items-center gap-10">
+                <div className="hidden md:flex items-center gap-2">
+                  <NavLink
+                    to="#"
+                    className="w-full py-2 px-4 bg-secondary text-center"
+                  >
+                    Shop Now
+                  </NavLink>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Mobile navigation toggle */}
-            <div className="flex items-center gap-4">
-              <Search className="hidden sm:block cursor-pointer" size={22} />
-              <Heart className="hidden sm:block cursor-pointer" size={22} />
-              <ShoppingCart className="cursor-pointer" size={22} />
 
-              <Profile />
+            {!user ? (
+              <>
+                <NavLink to="/signin" className={linkClass}>
+                  Sign In
+                </NavLink>
+                <NavLink to="/signup" className={linkClass}>
+                  Sign Up
+                </NavLink>
+              </>
+            ) : (
+              <div className="flex items-center gap-4">
+                <Search className="hidden sm:block cursor-pointer" size={22} />
+                <Heart className="hidden sm:block cursor-pointer" size={22} />
+                <ShoppingCart className="cursor-pointer" size={22} />
 
-              <div className="md:hidden flex items-center">
-                <Menu
-                  size={32}
-                  className="cursor-pointer"
-                  onClick={() => setToggleMenu(!toggleMenu)}
-                />
+                <Profile />
+
+                <div className="md:hidden flex items-center">
+                  <Menu
+                    size={32}
+                    className="cursor-pointer"
+                    onClick={() => setToggleMenu(!toggleMenu)}
+                  />
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -106,13 +125,16 @@ const Navbar = () => {
             <NavLink to="/" className="w-full py-2 px-4 hover:bg-secondary">
               Home
             </NavLink>
-            <NavLink to="#" className="w-full py-2 px-4 hover:bg-secondary">
+            <NavLink to="/shop" className="w-full py-2 px-4 hover:bg-secondary">
               Shop
             </NavLink>
-            <NavLink to="#" className="w-full py-2 px-4 hover:bg-secondary">
+            <NavLink to="/blog" className="w-full py-2 px-4 hover:bg-secondary">
               Blog
             </NavLink>
-            <NavLink to="#" className="w-full py-2 px-4 hover:bg-secondary">
+            <NavLink
+              to="/contact"
+              className="w-full py-2 px-4 hover:bg-secondary"
+            >
               Contact Us
             </NavLink>
             <NavLink

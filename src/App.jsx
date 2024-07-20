@@ -7,18 +7,27 @@ import {
 
 import Home from "./pages/Home";
 import MainLayout from "./layouts/MainLayout";
+import SignIn from "./pages/Signin.jsx";
+import SignUp from "./pages/Signup.jsx";
+import { AuthProvider } from "./services/authService";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
       <Route index element={<Home />} />
-      <Route path="*" element={<h1> Not Found </h1>} />
+      <Route path="signin" element={<SignIn />} />
+      <Route path="signup" element={<SignUp />} />
+      <Route path="*" element={<h1>Not Found</h1>} />
     </Route>
   )
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }
 
 export default App;
