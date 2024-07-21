@@ -112,7 +112,7 @@ const SignIn = () => {
           <div className="hidden md:block md:basis-1/3 lg:basis-1/4">
             <img
               src={Img}
-              className="md:w-60"
+              className="md:w-60 lg:w-52"
               alt="Image of a woman holding a smart phone"
             />
           </div>

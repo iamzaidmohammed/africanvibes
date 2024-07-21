@@ -172,7 +172,7 @@ const SignUp = () => {
             <div className="hidden lg:block lg:basis-1/3">
               <img
                 src={Img}
-                className="lg:w-80"
+                className="lg:w-64"
                 alt="Image of a woman holding a smart phone"
               />
             </div>
