@@ -4,7 +4,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
 import { FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -83,10 +83,10 @@ const Footer = () => {
               <div className="mb-2">
                 <h3 className="font-bold">Company</h3>
                 <div className="flex flex-col items-center">
-                  <a href="/about">About Us</a>
-                  <a href="#">Pricing</a>
-                  <a href="#">Career</a>
-                  <a href="#">Blogs</a>
+                  <Link to="/about">About Us</Link>
+                  <Link to="#">Pricing</Link>
+                  <Link to="#">Career</Link>
+                  <Link to="#">Blogs</Link>
                 </div>
               </div>
             </div>
