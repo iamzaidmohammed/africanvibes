@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../services/authService";
+import ProfileImg from "../assets/profile.jpg";
 import { UserRound, LayoutDashboard, Settings, LogOut } from "lucide-react";
 
 const Profile = () => {
@@ -27,7 +28,9 @@ const Profile = () => {
         className="rounded-full w-7 h-7 border-solid border-2 cursor-pointer"
         onClick={() => setToggleMenu(!toggleMenu)}
       >
-        <button className="border-gray-300"></button>
+        <button className="border-gray-300">
+          <img src={ProfileImg} alt="User profile picture" />
+        </button>
       </div>
 
       <div

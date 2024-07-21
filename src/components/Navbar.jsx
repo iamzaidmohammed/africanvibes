@@ -12,8 +12,8 @@ const Navbar = () => {
 
   const linkClass = ({ isActive }) =>
     isActive
-      ? "py-2 px-4 bg-secondary hover:bg-secondary"
-      : "py-2 px-4 hover:bg-secondary";
+      ? "py-2 px-4 bg-secondary text-xs lg:text-lg hover:bg-secondary"
+      : "py-2 px-4 text-xs lg:text-lg hover:bg-secondary";
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -31,10 +31,10 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-sm">
-      <div className="max-w-7xl flex items-center lg:px-16 xl:mx-auto">
+      <div className="max-w-7xl flex items-center md:px-5 lg:px-16 xl:mx-auto">
         <div className="flex justify-between items-center w-full px-5 ">
           {/* Primary menu and logo */}
-          <div className="flex items-center gap-16 my-2">
+          <div className="flex items-center gap-12 my-2">
             {/* logo */}
             <div>
               <NavLink
@@ -49,7 +49,7 @@ const Navbar = () => {
               </NavLink>
             </div>
 
-            <div className="hidden md:flex gap-8 ">
+            <div className="hidden md:flex md:gap-6">
               <NavLink to="/" className={linkClass}>
                 Home
               </NavLink>
@@ -66,14 +66,12 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-6">
-            {!user ? (
-              ""
-            ) : (
+            {user && (
               <div className="hidden xs:flex items-center gap-10">
                 <div className="hidden md:flex items-center gap-2">
                   <NavLink
                     to="#"
-                    className="w-full py-2 px-4 bg-secondary text-center"
+                    className="w-full py-2 px-4 bg-secondary text-center text-xs lg:text-lg"
                   >
                     Shop Now
                   </NavLink>
@@ -84,14 +82,20 @@ const Navbar = () => {
             {/* Mobile navigation toggle */}
 
             {!user ? (
-              <>
-                <NavLink to="/signin" className={linkClass}>
+              <div className="flex items-center gap-6">
+                <NavLink
+                  to="/users/signin"
+                  className="py-1 px-2 hover:bg-secondary border-2 border-secondary text-xs lg:text-lg"
+                >
                   Sign In
                 </NavLink>
-                <NavLink to="/signup" className={linkClass}>
+                <NavLink
+                  to="/users/signup"
+                  className="py-1 px-2 text-xs lg:text-lg bg-secondary hover:bg-secondary border-2 border-secondary"
+                >
                   Sign Up
                 </NavLink>
-              </>
+              </div>
             ) : (
               <div className="flex items-center gap-4">
                 <Search className="hidden sm:block cursor-pointer" size={22} />

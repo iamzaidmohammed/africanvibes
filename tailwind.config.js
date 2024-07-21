@@ -8,6 +8,7 @@ export default {
       colors: {
         primary: "#775454",
         secondary: "#F9DCB4",
+        tetiary: "#D9D9D9",
       },
       screens: {
         xs: "480px",
