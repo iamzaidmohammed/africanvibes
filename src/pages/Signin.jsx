@@ -92,18 +92,20 @@ const SignIn = () => {
             <div className="flex flex-col items-center">
               <h3 className="mb-5">OR</h3>
 
-              <button
-                className="bg-white w-60 px-4 py-2 text-black mb-4 rounded-md flex items-center gap-3"
-                type="submit"
-              >
-                <FcGoogle /> Continue with Google
-              </button>
-              <button
-                className="bg-white w-60 px-4 py-2 text-black mb-4 rounded-md flex items-center gap-3"
-                type="submit"
-              >
-                <FaApple /> Continue with Apple
-              </button>
+              <div className="lg:flex lg:gap-5">
+                <button
+                  className="bg-white w-60 px-4 py-2 text-black mb-4 rounded-md flex items-center gap-3"
+                  type="submit"
+                >
+                  <FcGoogle /> Continue with Google
+                </button>
+                <button
+                  className="bg-white w-60 px-4 py-2 text-black mb-4 rounded-md flex items-center gap-3"
+                  type="submit"
+                >
+                  <FaApple /> Continue with Apple
+                </button>
+              </div>
             </div>
           </div>
 
