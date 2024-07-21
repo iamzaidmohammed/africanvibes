@@ -1,7 +1,6 @@
 import Hero from "../assets/hero.jpg";
 import SecImg from "../assets/sec-img.jpg";
 import Footer from "../components/Footer";
-import Newsletter from "../components/Newsletter";
 import ProductCard from "../components/ProductCard";
 
 const Home = () => {
@@ -97,7 +96,6 @@ const Home = () => {
         </div>
       </section>
 
-      <Newsletter />
       <Footer />
     </main>
   );
