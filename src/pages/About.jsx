@@ -12,7 +12,7 @@ import Footer from "../components/Footer.jsx";
 const About = () => {
   return (
     <main className="max-w-7xl md:mx-auto px-5 md:px-10 lg:px-20">
-      <section className="about-us py-12">
+      <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center flex-col mb-6">
             <h2 className="text-center text-4xl mb-1">About Us</h2>

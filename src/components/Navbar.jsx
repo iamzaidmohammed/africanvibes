@@ -49,11 +49,11 @@ const Navbar = () => {
               </NavLink>
             </div>
 
-            <div className="hidden md:flex md:gap-6">
+            <div className="hidden md:flex md:gap-1">
               <NavLink to="/" className={linkClass}>
                 Home
               </NavLink>
-              <NavLink to="/shop" className={linkClass}>
+              <NavLink to="/shop/products" className={linkClass}>
                 Shop
               </NavLink>
               <NavLink to="/blog" className={linkClass}>
@@ -65,55 +65,38 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-6">
-            {user && (
-              <div className="hidden xs:flex items-center gap-10">
-                <div className="hidden md:flex items-center gap-2">
-                  <NavLink
-                    to="#"
-                    className="w-full py-2 px-4 bg-secondary text-center text-xs lg:text-lg"
-                  >
-                    Shop Now
-                  </NavLink>
-                </div>
+          {!user ? (
+            <div className="flex items-center gap-6">
+              <NavLink
+                to="/users/signin"
+                className="py-1 px-2 hover:bg-secondary border-2 border-secondary text-xs lg:text-lg"
+              >
+                Sign In
+              </NavLink>
+              <NavLink
+                to="/users/signup"
+                className="py-1 px-2 text-xs lg:text-lg bg-secondary hover:bg-secondary border-2 border-secondary"
+              >
+                Sign Up
+              </NavLink>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4">
+              <Search className="hidden sm:block cursor-pointer" size={22} />
+              <Heart className="hidden sm:block cursor-pointer" size={22} />
+              <ShoppingCart className="cursor-pointer" size={22} />
+
+              <Profile />
+
+              <div className="md:hidden flex items-center">
+                <Menu
+                  size={32}
+                  className="cursor-pointer"
+                  onClick={() => setToggleMenu(!toggleMenu)}
+                />
               </div>
-            )}
-
-            {/* Mobile navigation toggle */}
-
-            {!user ? (
-              <div className="flex items-center gap-6">
-                <NavLink
-                  to="/users/signin"
-                  className="py-1 px-2 hover:bg-secondary border-2 border-secondary text-xs lg:text-lg"
-                >
-                  Sign In
-                </NavLink>
-                <NavLink
-                  to="/users/signup"
-                  className="py-1 px-2 text-xs lg:text-lg bg-secondary hover:bg-secondary border-2 border-secondary"
-                >
-                  Sign Up
-                </NavLink>
-              </div>
-            ) : (
-              <div className="flex items-center gap-4">
-                <Search className="hidden sm:block cursor-pointer" size={22} />
-                <Heart className="hidden sm:block cursor-pointer" size={22} />
-                <ShoppingCart className="cursor-pointer" size={22} />
-
-                <Profile />
-
-                <div className="md:hidden flex items-center">
-                  <Menu
-                    size={32}
-                    className="cursor-pointer"
-                    onClick={() => setToggleMenu(!toggleMenu)}
-                  />
-                </div>
-              </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 
