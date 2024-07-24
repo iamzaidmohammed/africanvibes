@@ -20,7 +20,14 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await signup(name, email, password, confirmPassword);
+    const result = await signup(
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      confirmPassword
+    );
     setMessage(result.message);
     if (result.success) {
       await signin(email, password);
