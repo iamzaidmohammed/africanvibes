@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../services/authService";
 import ProfileImg from "../assets/profile.jpg";
-import { UserRound, LayoutDashboard, Settings, LogOut } from "lucide-react";
+import { LuUser2, LuLayoutDashboard } from "react-icons/lu";
+import { SlSettings } from "react-icons/sl";
+import { CgLogOut } from "react-icons/cg";
 
 const Profile = () => {
   const { logout } = useAuth();
@@ -45,26 +47,26 @@ const Profile = () => {
               href="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
-              <UserRound size={18} className="mr-2" /> Profile
+              <LuUser2 size={18} className="mr-2" /> Profile
             </a>
             <a
               href="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
-              <LayoutDashboard size={18} className="mr-2" /> Dashboard
+              <LuLayoutDashboard size={18} className="mr-2" /> Dashboard
             </a>
             <a
               href="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
-              <Settings size={18} className="mr-2" /> Settings
+              <SlSettings size={18} className="mr-2" /> Settings
             </a>
             <a
               onClick={logout}
               href="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
-              <LogOut size={18} className="mr-2" /> Log Out
+              <CgLogOut size={18} className="mr-2" /> Log Out
             </a>
           </div>
         </div>
