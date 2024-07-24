@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../services/authService";
 import ProfileImg from "../assets/profile.jpg";
-import { UserRound, LayoutDashboard, Settings, LogOut } from "lucide-react";
+import { LuUser2, LuLayoutDashboard } from "react-icons/lu";
+import { SlSettings } from "react-icons/sl";
+import { CgLogOut } from "react-icons/cg";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { logout } = useAuth();
@@ -41,31 +44,31 @@ const Profile = () => {
       >
         <div className="px-5 pt-1">
           <div className="flex flex-col items-center font-bold tracking-wider pt-1">
-            <a
-              href="#"
+            <Link
+              to="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
-              <UserRound size={18} className="mr-2" /> Profile
-            </a>
-            <a
-              href="#"
+              <LuUser2 size={18} className="mr-2" /> Profile
+            </Link>
+            <Link
+              to="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
-              <LayoutDashboard size={18} className="mr-2" /> Dashboard
-            </a>
-            <a
-              href="#"
+              <LuLayoutDashboard size={18} className="mr-2" /> Dashboard
+            </Link>
+            <Link
+              to="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
-              <Settings size={18} className="mr-2" /> Settings
-            </a>
-            <a
+              <SlSettings size={18} className="mr-2" /> Settings
+            </Link>
+            <Link
+              to="/"
               onClick={logout}
-              href="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
-              <LogOut size={18} className="mr-2" /> Log Out
-            </a>
+              <CgLogOut size={18} className="mr-2" /> Log Out
+            </Link>
           </div>
         </div>
       </div>

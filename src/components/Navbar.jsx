@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, ShoppingCart, Search, Heart } from "lucide-react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { CgShoppingCart } from "react-icons/cg";
+import { FaSearch, FaRegHeart } from "react-icons/fa";
 import Logo from "../assets/logo.png";
 import Profile from "./Profile";
 import { useAuth } from "../services/authService";
@@ -81,8 +83,7 @@ const Navbar = () => {
               </NavLink>
 
               <div className="md:hidden flex items-center">
-                <Menu
-                  size={32}
+                <GiHamburgerMenu
                   className="cursor-pointer"
                   onClick={() => setToggleMenu(!toggleMenu)}
                 />
@@ -90,16 +91,19 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              <Search className="hidden sm:block cursor-pointer" size={22} />
-              <Heart className="hidden sm:block cursor-pointer" size={22} />
-              <ShoppingCart className="cursor-pointer" size={22} />
+              <FaSearch className="hidden sm:block cursor-pointer" size={22} />
+              <FaRegHeart
+                className="hidden sm:block cursor-pointer"
+                size={22}
+              />
+              <CgShoppingCart className="cursor-pointer" size={22} />
 
               <Profile />
 
               <div className="md:hidden flex items-center">
-                <Menu
-                  size={32}
+                <GiHamburgerMenu
                   className="cursor-pointer"
+                  size={22}
                   onClick={() => setToggleMenu(!toggleMenu)}
                 />
               </div>
