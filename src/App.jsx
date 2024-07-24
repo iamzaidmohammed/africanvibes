@@ -10,6 +10,7 @@ import SignIn from "./pages/Signin.jsx";
 import SignUp from "./pages/Signup.jsx";
 import { AuthProvider } from "./services/authService";
 import About from "./pages/About.jsx";
+import Products from "./pages/Products.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
       <Route path="/users/signin" element={<SignIn />} />
       <Route path="/users/signup" element={<SignUp />} />
       <Route path="/about" element={<About />} />
+      <Route path="/shop/products" element={<Products />} />
       <Route path="*" element={<h1>Not Found</h1>} />
     </Route>
   )
