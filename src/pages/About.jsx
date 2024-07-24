@@ -8,6 +8,7 @@ import { FaTruck } from "react-icons/fa";
 import { GiReturnArrow } from "react-icons/gi";
 import { VscPackage } from "react-icons/vsc";
 import Footer from "../components/Footer.jsx";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -27,16 +28,19 @@ const About = () => {
               />
             </div>
             <div className="md:w-1/2 md:pl-10 text-center md:text-left">
-              <p className="mt-4 text-lg leading-relaxed">
+              <p className="mt-4 text-lg leading-relaxed mb-6">
                 At <strong>Africa Vibes</strong>, we are passionate about
                 preserving and promoting the rich heritage of traditional and
                 indigenous products. Our mission is to bring you closer to the
                 authentic beauty, craftsmanship, and culture of diverse
                 communities around the world.
               </p>
-              <button className="mt-6 px-5 py-3 bg-primary text-white font-semibold rounded-md">
+              <Link
+                to="/shop/products"
+                className="mt-6 px-5 py-3 bg-primary text-white font-semibold rounded-md"
+              >
                 Shop Now
-              </button>
+              </Link>
             </div>
           </div>
         </div>
