@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import Img from "../assets/signin-img.jpg";
 import Footer from "../components/Footer";
+import { Helmet } from "react-helmet";
 
 const SignUp = () => {
   const { signup, signin } = useAuth();
@@ -47,6 +48,9 @@ const SignUp = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Create an account | African Vibes</title>
+      </Helmet>
       <div className="max-w-7xl md:mx-auto px-5 md:px-10 lg:px-20">
         <section>
           <div className="md:flex md:items-center md:gap-10">
