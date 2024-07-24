@@ -79,6 +79,14 @@ const Navbar = () => {
               >
                 Sign Up
               </NavLink>
+
+              <div className="md:hidden flex items-center">
+                <Menu
+                  size={32}
+                  className="cursor-pointer"
+                  onClick={() => setToggleMenu(!toggleMenu)}
+                />
+              </div>
             </div>
           ) : (
             <div className="flex items-center gap-4">
@@ -104,7 +112,7 @@ const Navbar = () => {
       <div
         ref={menuRef}
         className={`fixed right-3 z-40 w-80 bg-gray-100 overflow-hidden flex flex-col lg:hidden gap-12  origin-top duration-700  ${
-          !toggleMenu ? "h-0" : "h-56"
+          !toggleMenu ? "h-0" : "h-44"
         }`}
       >
         <div className="px-5 pt-1">
@@ -112,7 +120,10 @@ const Navbar = () => {
             <NavLink to="/" className="w-full py-2 px-4 hover:bg-secondary">
               Home
             </NavLink>
-            <NavLink to="/shop" className="w-full py-2 px-4 hover:bg-secondary">
+            <NavLink
+              to="/shop/products"
+              className="w-full py-2 px-4 hover:bg-secondary"
+            >
               Shop
             </NavLink>
             <NavLink to="/blog" className="w-full py-2 px-4 hover:bg-secondary">
@@ -123,12 +134,6 @@ const Navbar = () => {
               className="w-full py-2 px-4 hover:bg-secondary"
             >
               Contact Us
-            </NavLink>
-            <NavLink
-              to="#"
-              className="w-full py-2 px-4 bg-secondary text-center"
-            >
-              Shop Now
             </NavLink>
           </div>
         </div>
