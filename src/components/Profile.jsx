@@ -4,6 +4,7 @@ import ProfileImg from "../assets/profile.jpg";
 import { LuUser2, LuLayoutDashboard } from "react-icons/lu";
 import { SlSettings } from "react-icons/sl";
 import { CgLogOut } from "react-icons/cg";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { logout } = useAuth();
@@ -43,31 +44,31 @@ const Profile = () => {
       >
         <div className="px-5 pt-1">
           <div className="flex flex-col items-center font-bold tracking-wider pt-1">
-            <a
-              href="#"
+            <Link
+              to="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
               <LuUser2 size={18} className="mr-2" /> Profile
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
               <LuLayoutDashboard size={18} className="mr-2" /> Dashboard
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
               <SlSettings size={18} className="mr-2" /> Settings
-            </a>
-            <a
+            </Link>
+            <Link
+              to="/"
               onClick={logout}
-              href="#"
               className="flex items-center w-full py-2 px-4 hover:bg-secondary"
             >
               <CgLogOut size={18} className="mr-2" /> Log Out
-            </a>
+            </Link>
           </div>
         </div>
       </div>
