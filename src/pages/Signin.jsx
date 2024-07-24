@@ -18,7 +18,6 @@ const SignIn = () => {
     const result = await signin(email, password);
     setMessage(result.message);
     if (result.success) {
-      // await signin(email, password);
       navigate("/", { replace: true });
     }
   };

@@ -21,7 +21,14 @@ export const AuthProvider = ({ children }) => {
     }
   }, [user]);
 
-  const signup = async (name, email, password, confirmPassword) => {
+  const signup = async (
+    firstName,
+    lastName,
+    username,
+    email,
+    password,
+    confirmPassword
+  ) => {
     try {
       const response = await fetch("/api/routes/auth.php", {
         method: "POST",
@@ -30,7 +37,9 @@ export const AuthProvider = ({ children }) => {
         },
         body: JSON.stringify({
           action: "signup",
-          name,
+          firstName,
+          lastName,
+          username,
           email,
           password,
           confirmPassword,
