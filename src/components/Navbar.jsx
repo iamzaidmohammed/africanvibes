@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgShoppingCart } from "react-icons/cg";
 import { FaSearch, FaRegHeart } from "react-icons/fa";
@@ -91,12 +91,23 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              <FaSearch className="hidden sm:block cursor-pointer" size={22} />
-              <FaRegHeart
-                className="hidden sm:block cursor-pointer"
-                size={22}
-              />
-              <CgShoppingCart className="cursor-pointer" size={22} />
+              <Link to="/search">
+                <FaSearch
+                  className="hidden sm:block cursor-pointer"
+                  size={22}
+                />
+              </Link>
+
+              <Link to="/shop/products/likes">
+                <FaRegHeart
+                  className="hidden sm:block cursor-pointer"
+                  size={22}
+                />
+              </Link>
+
+              <Link to="/shop/cart">
+                <CgShoppingCart className="cursor-pointer" size={22} />
+              </Link>
 
               <Profile />
 
