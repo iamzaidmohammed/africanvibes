@@ -73,6 +73,7 @@ const Cart = () => {
       <Helmet>
         <title>Cart | African Vibes</title>
       </Helmet>
+
       <section className="max-w-7xl md:mx-auto px-5 md:px-10 lg:px-20">
         <div className="md:flex gap-8">
           <div className="w-full md:w-3/4">
