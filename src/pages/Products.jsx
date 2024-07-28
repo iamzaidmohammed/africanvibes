@@ -76,6 +76,11 @@ const Products = () => {
                 />
               ))}
             </div>
+            <div className="text-center">
+              <button className="mt-2 px-4 py-2 bg-primary text-white rounded">
+                Browse more
+              </button>
+            </div>
           </main>
         </div>
         <FlashSale />
