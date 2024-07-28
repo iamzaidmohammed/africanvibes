@@ -163,7 +163,7 @@ const Filters = ({ CategorySelected }) => {
 };
 
 Filters.propTypes = {
-  CategorySelected: PropTypes.string.isRequired,
+  CategorySelected: PropTypes.func.isRequired,
 };
 
 export default Filters;
