@@ -10,8 +10,9 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   // const [filteredProducts, setFilteredProducts] = useState([]);
-  // const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     fetch("/api/routes/products.php")
@@ -32,22 +33,6 @@ const Products = () => {
       });
   }, []);
 
-  // const handleCategorySelect = (category) => {
-  //   setSelectedCategory(category);
-  // };
-
-  // const handleCategorySelect = (category) => {
-  //   setSelectedCategory(category);
-  //   if (category) {
-  //     const filtered = products.filter(
-  //       (product) => product.categoryId === category.id
-  //     );
-  //     setFilteredProducts(filtered);
-  //   } else {
-  //     setFilteredProducts(products);
-  //   }
-  // };
-
   if (loading) {
     return <Loading />;
   }
@@ -55,6 +40,11 @@ const Products = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+  // Filter products based on the selected category
+  const filteredProducts = selectedCategory
+    ? products.filter((product) => product.categoryId == selectedCategory[0])
+    : products;
 
   return (
     <>
@@ -68,17 +58,16 @@ const Products = () => {
           <p>Browse from 500 latest items.</p>
         </div>
         <div className="flex flex-col md:flex-row">
-          <FilterSection />
+          <FilterSection CategorySelected={setSelectedCategory} />
 
           <main className="p-4 w-full md:w-3/4">
             <h1 className="text-2xl font-bold mb-4">
-              {/* {selectedCategory
-                ? `${selectedCategory.name} (${products.length})`
-                : `All Categories(${products.length})`} */}
-              category
+              {selectedCategory
+                ? `${selectedCategory[1]} (${filteredProducts.length})`
+                : `All Products (${products.length})`}
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {products.map((product) => (
+              {filteredProducts.map((product) => (
                 <ProductsCard
                   key={product.id}
                   name={product.name}

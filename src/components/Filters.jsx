@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
-const Filters = () => {
+const Filters = ({ CategorySelected }) => {
   const [isPriceOpen, setIsPriceOpen] = useState(true);
   const [isColourOpen, setIsColourOpen] = useState(true);
   const [isSizeOpen, setIsSizeOpen] = useState(true);
   const [isProductTagsOpen, setIsProductTagsOpen] = useState(true);
 
   const [categories, setCategories] = useState([]);
-  // const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     fetch("/api/routes/categories.php")
@@ -18,7 +18,19 @@ const Filters = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  // console.log(selectedCategory);
+  useEffect(() => {
+    CategorySelected(selectedCategory);
+  }, [CategorySelected, selectedCategory]);
+
+  const onCategorySelect = (event) => {
+    const categoryId = event.target.id;
+    const categoryName = event.target.getAttribute("data-name");
+    if (event.target.checked) {
+      setSelectedCategory(() => [categoryId, categoryName]);
+    } else {
+      setSelectedCategory(null);
+    }
+  };
 
   return (
     <aside className="py-4 w-full md:w-1/4">
@@ -35,10 +47,15 @@ const Filters = () => {
               <input
                 className="cursor-pointer"
                 type="checkbox"
-                // onClick={onCategorySelect(category.name)}
                 id={category.id}
+                data-name={category.name}
+                onChange={onCategorySelect}
               />{" "}
-              <label htmlFor={category.id} className="cursor-pointer">
+              <label
+                htmlFor={category.id}
+                className="cursor-pointer"
+                onClick={onCategorySelect}
+              >
                 {category.name}
               </label>
             </li>
@@ -145,8 +162,8 @@ const Filters = () => {
   );
 };
 
-// Filters.propTypes = {
-//   cat: PropTypes.func.isRequired,
-// };
+Filters.propTypes = {
+  CategorySelected: PropTypes.string.isRequired,
+};
 
 export default Filters;
