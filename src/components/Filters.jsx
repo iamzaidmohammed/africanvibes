@@ -1,11 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
-const Filters = () => {
+const Filters = ({ CategorySelected }) => {
   const [isPriceOpen, setIsPriceOpen] = useState(true);
   const [isColourOpen, setIsColourOpen] = useState(true);
   const [isSizeOpen, setIsSizeOpen] = useState(true);
   const [isProductTagsOpen, setIsProductTagsOpen] = useState(true);
+
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  useEffect(() => {
+    fetch("/api/routes/categories.php")
+      .then((res) => res.json())
+      .then((data) => setCategories(() => data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    CategorySelected(selectedCategory);
+  }, [CategorySelected, selectedCategory]);
+
+  const onCategorySelect = (event) => {
+    const categoryId = event.target.id;
+    const categoryName = event.target.getAttribute("data-name");
+    if (event.target.checked) {
+      setSelectedCategory(() => [categoryId, categoryName]);
+    } else {
+      setSelectedCategory(null);
+    }
+  };
 
   return (
     <aside className="py-4 w-full md:w-1/4">
@@ -15,32 +40,26 @@ const Filters = () => {
       </div>
       <div className="mb-4">
         <h3 className="font-semibold">Categories</h3>
+
         <ul>
-          <li>
-            <input type="checkbox" id="jewelry" />{" "}
-            <label htmlFor="jewelry">Jewelry and Accessories</label>
-          </li>
-          <li>
-            <input type="checkbox" id="clothing" />{" "}
-            <label htmlFor="clothing">Clothings and Textiles</label>
-          </li>
-          <li>
-            <input type="checkbox" id="decor" />{" "}
-            <label htmlFor="decor">Home Decor</label>
-          </li>
-          <li>
-            <input type="checkbox" id="art" />{" "}
-            <label htmlFor="art">Arts and Collectibles</label>
-          </li>
-          <li>
-            <input type="checkbox" id="crafts" />{" "}
-            <label htmlFor="crafts">Crafts Supplies</label>
-          </li>
-          <li>
-            <input type="checkbox" id="books" />{" "}
-            <label htmlFor="books">Books and Media</label>
-          </li>
-          {/* Add more categories as needed */}
+          {categories.map((category) => (
+            <li key={category.id}>
+              <input
+                className="cursor-pointer"
+                type="checkbox"
+                id={category.id}
+                data-name={category.name}
+                onChange={onCategorySelect}
+              />{" "}
+              <label
+                htmlFor={category.id}
+                className="cursor-pointer"
+                onClick={onCategorySelect}
+              >
+                {category.name}
+              </label>
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -62,7 +81,6 @@ const Filters = () => {
               <input type="checkbox" id="price2" />{" "}
               <label htmlFor="price2">$2000 to $3000</label>
             </li>
-            {/* Add more price ranges as needed */}
           </ul>
         )}
       </div>
@@ -85,7 +103,6 @@ const Filters = () => {
               <input type="checkbox" id="red" />{" "}
               <label htmlFor="red">Red</label>
             </li>
-            {/* Add more colours as needed */}
           </ul>
         )}
       </div>
@@ -116,7 +133,6 @@ const Filters = () => {
               <input type="checkbox" id="xxl" />{" "}
               <label htmlFor="xxl">XXL</label>
             </li>
-            {/* Add more sizes as needed */}
           </ul>
         )}
       </div>
@@ -139,12 +155,15 @@ const Filters = () => {
               <input type="checkbox" id="new" />{" "}
               <label htmlFor="new">New</label>
             </li>
-            {/* Add more tags as needed */}
           </ul>
         )}
       </div>
     </aside>
   );
+};
+
+Filters.propTypes = {
+  CategorySelected: PropTypes.string.isRequired,
 };
 
 export default Filters;
