@@ -5,6 +5,7 @@ import Footer from "../components/Footer.jsx";
 import { Helmet } from "react-helmet";
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading.jsx";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -68,12 +69,13 @@ const Products = () => {
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {filteredProducts.map((product) => (
-                <ProductsCard
-                  key={product.id}
-                  name={product.name}
-                  image={`/api/assets/images/${product.img}`}
-                  price={product.price}
-                />
+                <Link key={product.id} to={`/shop/products/${product.id}`}>
+                  <ProductsCard
+                    name={product.name}
+                    image={`/api/assets/images/${product.img}`}
+                    price={product.price}
+                  />
+                </Link>
               ))}
             </div>
             <div className="text-center">
