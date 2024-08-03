@@ -18,7 +18,17 @@ const ProductsCard = ({ image, name, price, id }) => {
       return;
     }
 
-    // console.log(user);
+    // Fetch current cart items
+    const cartResponse = await fetch("/api/routes/cart.php?getCartItems=true");
+    const cartData = await cartResponse.json();
+
+    // Check if the product is already in the cart
+    const productInCart = cartData.some((item) => item.productID === id);
+
+    if (productInCart) {
+      console.log("Product is already in the cart.");
+      return;
+    }
 
     const response = await fetch("/api/routes/cart.php", {
       method: "POST",
