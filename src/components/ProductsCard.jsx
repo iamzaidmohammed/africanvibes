@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../services/authService";
-// import { useCart } from "../services/cartService";
+import { toast } from "react-toastify";
 
 const ProductsCard = ({ image, name, price, id }) => {
   const { user } = useAuth();
@@ -26,7 +26,7 @@ const ProductsCard = ({ image, name, price, id }) => {
     const productInCart = cartData.some((item) => item.productID === id);
 
     if (productInCart) {
-      console.log("Product is already in the cart.");
+      toast.info("Product is already in the cart.");
       return;
     }
 
@@ -45,9 +45,9 @@ const ProductsCard = ({ image, name, price, id }) => {
     const data = await response.json();
 
     if (data.status === "success") {
-      console.log(data.message);
+      toast.success(data.message);
     } else {
-      console.error(data.message);
+      toast.error(data.message);
     }
   };
 

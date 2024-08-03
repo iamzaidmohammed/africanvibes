@@ -5,8 +5,6 @@ import PropTypes from "prop-types";
 const CartItem = ({ item, onRemove }) => {
   const [quantity, setQuantity] = useState(item.quantity);
 
-  // message && console.log(message);
-
   const handleRemoveFromCart = async () => {
     await onRemove(item.cartID);
   };

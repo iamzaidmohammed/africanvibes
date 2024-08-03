@@ -4,10 +4,10 @@ import EmptyCart from "../assets/empty-cart.svg";
 import CartItem from "../components/CartItem.jsx";
 import CartSummary from "../components/CartSummary.jsx";
 import Footer from "../components/Footer.jsx";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [message, setMessage] = useState("");
   let total = 0;
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const Cart = () => {
     const data = await response.json();
 
     if (data.status === "success") {
-      setMessage(data.message);
+      toast.success(data.message);
       setCartItems((prevItems) =>
         prevItems.filter((item) => item.cartID !== cartId)
       );
