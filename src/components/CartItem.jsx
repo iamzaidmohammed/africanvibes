@@ -2,8 +2,14 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 // import img from "../assets/offer-1.png";
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, onRemove }) => {
   const [quantity, setQuantity] = useState(item.quantity);
+
+  // message && console.log(message);
+
+  const handleRemoveFromCart = async () => {
+    await onRemove(item.cartID);
+  };
 
   return (
     <div className="border-b border-gray-300 py-4 flex">
@@ -25,11 +31,17 @@ const CartItem = ({ item }) => {
             type="number"
             min="1"
             value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
+            onChange={(e) => setQuantity(() => parseInt(e.target.value))}
             className="w-12 ml-2 border border-gray-300 rounded p-1"
           />
         </div>
-        <button className="text-red-500 mt-2">Remove</button>
+        <button
+          type="button"
+          onClick={handleRemoveFromCart}
+          className="text-red-500 mt-2"
+        >
+          Remove
+        </button>
       </div>
     </div>
   );
@@ -37,6 +49,7 @@ const CartItem = ({ item }) => {
 
 CartItem.propTypes = {
   item: PropTypes.object.isRequired,
+  onRemove: PropTypes.func.isRequired,
 };
 
 export default CartItem;
