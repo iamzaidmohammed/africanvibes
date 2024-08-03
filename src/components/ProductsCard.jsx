@@ -1,10 +1,27 @@
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../services/authService";
 
-const ProductsCard = ({ image, name, price, product }) => {
+const ProductsCard = ({ image, name, price, id }) => {
+  const { user } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleAddToCart = () => {
+    if (!user) {
+      navigate("/users/signin", {
+        state: { from: location },
+      });
+      return;
+    }
+
+    console.log(`Added added product with id - ${id} to cart`);
+  };
+
   return (
     <div className="p-4">
-      <Link to={`/shop/products/${product}`}>
+      <Link to={`/shop/products/${id}`}>
         <img
           src={image}
           alt={name}
@@ -15,7 +32,11 @@ const ProductsCard = ({ image, name, price, product }) => {
           <p className="text-primary font-bold">${price}</p>
         </div>
       </Link>
-      <button className="mt-2 px-4 py-2 w-full bg-primary text-white rounded">
+      <button
+        type="button"
+        onClick={handleAddToCart}
+        className="mt-2 px-4 py-2 w-full bg-primary text-white rounded"
+      >
         Add to Cart
       </button>
     </div>
@@ -28,5 +49,5 @@ ProductsCard.propTypes = {
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
-  product: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
 };
