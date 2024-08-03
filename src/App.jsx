@@ -15,6 +15,7 @@ import ProductsDetails from "./pages/ProductsDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import CartPage from "./pages/Cart.jsx";
 import Contact from "./pages/Contact.jsx";
+import { CartProvider } from "./services/cartService.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,7 +36,9 @@ const router = createBrowserRouter(
 function App() {
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
     </AuthProvider>
   );
 }
