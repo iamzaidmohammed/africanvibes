@@ -19,7 +19,7 @@ const ProductDetails = () => {
   return (
     <>
       <Helmet>
-        <title>Products Details | African Vibes</title>
+        <title> {`${product.map((item) => item.name)} | African Vibes`} </title>
       </Helmet>
 
       <div className="max-w-7xl md:mx-auto px-5 md:px-10 lg:px-20">
