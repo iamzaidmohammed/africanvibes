@@ -1,16 +1,20 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import img from "../assets/offer-1.png";
+// import img from "../assets/offer-1.png";
 
 const CartItem = ({ item }) => {
   const [quantity, setQuantity] = useState(item.quantity);
 
   return (
     <div className="border-b border-gray-300 py-4 flex">
-      <img src={img} alt={item.name} className="w-20 h-20 object-cover" />
+      <img
+        src={`/api/assets/images/${item.image}`}
+        alt={item.productName}
+        className="w-20 h-20 object-cover"
+      />
       <div className="flex-1 ml-4">
         <div className="flex justify-between">
-          <h2 className="text-lg font-bold">{item.name}</h2>
+          <h2 className="text-lg font-bold">{item.productName}</h2>
           <p className="text-lg font-bold">${item.price}</p>
         </div>
         <p>Colour: {item.color}</p>

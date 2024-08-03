@@ -1,14 +1,16 @@
 import PropTypes from "prop-types";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../services/authService";
+// import { useCart } from "../services/cartService";
 
 const ProductsCard = ({ image, name, price, id }) => {
   const { user } = useAuth();
+  // const { addToCart } = useCart();
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!user) {
       navigate("/users/signin", {
         state: { from: location },
@@ -16,7 +18,27 @@ const ProductsCard = ({ image, name, price, id }) => {
       return;
     }
 
-    console.log(`Added added product with id - ${id} to cart`);
+    // console.log(user);
+
+    const response = await fetch("/api/routes/cart.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: user.id,
+        product_id: id,
+        quantity: 1,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.status === "success") {
+      console.log(data.message);
+    } else {
+      console.error(data.message);
+    }
   };
 
   return (
@@ -50,4 +72,5 @@ ProductsCard.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
+  // product: PropTypes.object.isRequired,
 };
