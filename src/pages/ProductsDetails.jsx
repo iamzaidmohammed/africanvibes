@@ -1,9 +1,21 @@
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FaStar } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { FaArrowLeftLong } from "react-icons/fa6";
 import Footer from "../components/Footer";
 
 const ProductDetails = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    fetch(`/api/routes/products.php?id=${id}`)
+      .then((res) => res.json())
+      .then((data) => setProduct(() => data))
+      .catch((err) => console.error(err));
+  }, [id]);
+
   return (
     <>
       <Helmet>
@@ -12,15 +24,16 @@ const ProductDetails = () => {
 
       <div className="max-w-7xl md:mx-auto px-5 md:px-10 lg:px-20">
         <div className="bg-primary h-12 sm:h-52 flex items-center justify-center mb-4 text-sm sm:text-xl md:text-2xl text-white rounded-md">
-          <NavLink to="#" className="hover:underline">
+          <Link to="/shop/products" className="hover:underline">
             Products
-          </NavLink>{" "}
-          /
-          <NavLink to="#" className="hover:underline">
-            Pottery
-          </NavLink>{" "}
-          /<span className="">Product Details</span>
+          </Link>{" "}
+          /<span>{product.map((item) => item.name)}</span>
         </div>
+
+        <Link to="/shop/products" className="flex items-center gap-1 my-2">
+          <FaArrowLeftLong />{" "}
+          <p className="hover:underline">Back to products</p>
+        </Link>
 
         <div className="flex flex-col md:flex-row gap-8">
           <div className="md:w-1/2">
@@ -54,14 +67,18 @@ const ProductDetails = () => {
           </div>
 
           <div className="md:w-1/2">
-            <h1 className="text-2xl font-bold">Pottery</h1>
+            <h1 className="text-2xl font-bold">
+              {product.map((item) => item.name)}
+            </h1>
             <p className="mt-2 text-gray-600">
-              This piece is characterized by intricate designs, traditional
-              patterns, and cultural significance, making it not only functional
-              but also beautiful pieces of art.
+              {product.map((item) => item.desc)}
             </p>
-            <p className="mt-4 text-3xl font-bold text-gray-900">$40.56</p>
-            <p className="mt-1 text-gray-600">Product Code: CDMP1 In Stock</p>
+            <p className="mt-4 text-3xl font-bold text-gray-900">
+              {product.map((item) => item.price)}
+            </p>
+            <p className="mt-1 text-gray-600">
+              Product Code: CDMP1 | {product.map((item) => item.stock)} In Stock
+            </p>
 
             <div className="flex items-center mt-2">
               <div className="flex text-yellow-400">
@@ -78,10 +95,10 @@ const ProductDetails = () => {
                 defaultValue="1"
                 className="w-16 p-2 text-center border rounded-md"
               />
-              <button className="ml-4 px-4 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md">
+              <button className="ml-4 px-4 py-2 text-white bg-primary rounded-md">
                 Buy Now
               </button>
-              <button className="ml-2 px-4 py-2 border border-gray-300 text-gray-900 hover:bg-gray-100 rounded-md">
+              <button className="ml-2 px-4 py-2 bg-primary text-white rounded-md">
                 Add to Cart
               </button>
             </div>
