@@ -11,10 +11,13 @@ import SignUp from "./pages/Signup.jsx";
 import { AuthProvider } from "./services/authService";
 import About from "./pages/About.jsx";
 import Products from "./pages/Products.jsx";
+import ProductsDetails from "./pages/ProductsDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import CartPage from "./pages/Cart.jsx";
 import Contact from "./pages/Contact.jsx";
 import Blog from "./pages/Blog.jsx";
+import { CartProvider } from "./services/cartService.jsx";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +27,7 @@ const router = createBrowserRouter(
       <Route path="/users/signup" element={<SignUp />} />
       <Route path="/about" element={<About />} />
       <Route path="/shop/products" element={<Products />} />
+      <Route path="/shop/products/:id" element={<ProductsDetails />} />
       <Route path="/shop/cart" element={<CartPage />} />
       <Route path= "/blog" element= {<Blog/>}/>
       <Route path="/contact" element={<Contact />} />
@@ -35,7 +39,9 @@ const router = createBrowserRouter(
 function App() {
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
     </AuthProvider>
   );
 }

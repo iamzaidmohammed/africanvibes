@@ -73,6 +73,7 @@ const Products = () => {
                   name={product.name}
                   image={`/api/assets/images/${product.img}`}
                   price={product.price}
+                  id={product.id}
                 />
               ))}
             </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../services/authService";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import Img from "../assets/signin-img.jpg";
@@ -11,15 +11,18 @@ const SignIn = () => {
   const { signin } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await signin(email, password);
     setMessage(result.message);
     if (result.success) {
-      navigate("/", { replace: true });
+      const from = location.state?.from || "/";
+      navigate(from, { replace: true });
     }
   };
 
