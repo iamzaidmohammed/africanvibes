@@ -15,7 +15,9 @@ import ProductsDetails from "./pages/ProductsDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import CartPage from "./pages/Cart.jsx";
 import Contact from "./pages/Contact.jsx";
+import Blog from "./pages/Blog.jsx";
 import { CartProvider } from "./services/cartService.jsx";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +29,7 @@ const router = createBrowserRouter(
       <Route path="/shop/products" element={<Products />} />
       <Route path="/shop/products/:id" element={<ProductsDetails />} />
       <Route path="/shop/cart" element={<CartPage />} />
+      <Route path= "/blog" element= {<Blog/>}/>
       <Route path="/contact" element={<Contact />} />
       <Route path="*" element={<NotFound />} />
     </Route>

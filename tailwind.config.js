@@ -7,6 +7,7 @@ export default {
         primary: "#775454",
         secondary: "#F9DCB4",
         tetiary: "#D9D9D9",
+        customGray: "#6E6E6E"
       },
       screens: {
         xs: "480px",
