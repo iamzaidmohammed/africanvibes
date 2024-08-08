@@ -1,34 +1,36 @@
 import PropTypes from "prop-types";
-import CardImage from "../assets/card-img.jpg";
-import Rating from "@mui/material/Rating";
-import { styled } from "@mui/material/styles";
+// import CardImage from "../assets/card-img.jpg";
+// import Rating from "@mui/material/Rating";
+// import { styled } from "@mui/material/styles";
 
-const CustomRating = styled(Rating)({
-  "& .MuiRating-iconFilled": {
-    color: "#775454",
-  },
-});
+// const CustomRating = styled(Rating)({
+//   "& .MuiRating-iconFilled": {
+//     color: "#775454",
+//   },
+// });
 
-const ProductCard = ({ name, price, rating }) => {
+const ProductCard = ({ name, image, price /* rating*/ }) => {
   return (
-    <div className="bg-white w-28 sm:w-44 md:w-56 flex-shrink-0">
-      <img src={CardImage} className="" alt="product image" />
-      <div className="flex flex-col items-center">
-        <h3 className="text-lg">{name}</h3>
-        <p>{price}</p>
-        <CustomRating name="read-only" value={rating} readOnly />
-        <button className="bg-primary text-white p-2 rounded-md">
-          Add to Cart
-        </button>
-      </div>
+    <div className="bg-white shadow-md rounded-md p-4 flex-shrink-0 w-[250px]">
+      <img
+        src={image}
+        alt={name}
+        className="h-48 w-full object-cover rounded-t-md"
+      />
+      <h3 className="text-lg font-semibold mt-4">{name}</h3>
+      <p className="text-gray-500">{price}</p>
+      <button className="mt-2 w-full bg-primary text-white py-2 rounded-md">
+        Add to Cart
+      </button>
     </div>
   );
 };
 
 ProductCard.propTypes = {
   name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired,
+  // rating: PropTypes.number.isRequired,
 };
 
 export default ProductCard;
