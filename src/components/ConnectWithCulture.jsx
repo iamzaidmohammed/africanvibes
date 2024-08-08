@@ -1,4 +1,3 @@
-// src/components/ConnectWithCulture.js
 const ConnectWithCulture = () => {
   return (
     <section className="mt-6">

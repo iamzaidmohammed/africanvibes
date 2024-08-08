@@ -1,20 +1,21 @@
 import ProductCard from "./ProductCard";
+import img1 from "../assets/card-img.jpg";
+import img2 from "../assets/sec-img.jpg";
 
-// src/components/FeaturedItems.js
 const featuredItems = [
-  { img: "/src/assets/card-img.jpg", title: "Tie & Dye", price: "$40.50" },
+  { img: img1, title: "Tie & Dye", price: "$40.50" },
   {
-    img: "/src/assets/sec-img.jpg",
+    img: img2,
     title: "Traditional Art",
     price: "$50.50",
   },
-  { img: "/src/assets/card-img.jpg", title: "Tie & Dye", price: "$40.50" },
+  { img: img1, title: "Tie & Dye", price: "$40.50" },
   {
-    img: "/src/assets/sec-img.jpg",
+    img: img2,
     title: "Traditional Art",
     price: "$50.50",
   },
-  { img: "/src/assets/sec-img.jpg", title: "Tie & Dye", price: "$40.50" },
+  { img: img2, title: "Tie & Dye", price: "$40.50" },
 
   // Add more items as needed
 ];

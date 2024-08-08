@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
+import BannerImg from "../assets/sec-img.jpg";
 
-// src/components/Banner.js
 const Banner = () => {
   return (
     <section className="bg-secondary p-6 md:px-12 rounded-lg flex items-center justify-between flex-col md:flex-row mt-6">
@@ -18,7 +18,7 @@ const Banner = () => {
         </Link>
       </div>
       <img
-        src="/src/assets/sec-img.jpg"
+        src={BannerImg}
         alt="Pottery"
         className="w-full md:w-40 h-auto rounded-lg object-cover"
       />
