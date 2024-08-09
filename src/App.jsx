@@ -18,6 +18,7 @@ import Contact from "./pages/Contact.jsx";
 import Blog from "./pages/Blog.jsx";
 import { CartProvider } from "./services/cartService.jsx";
 import Shipping from "./pages/Shipping.jsx";
+import Payment from "./pages/Payment.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
       <Route path="/blog" element={<Blog />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/shipping-info" element={<Shipping />} />
+      <Route path="/payment" element={<Payment />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )
