@@ -10,7 +10,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/routes/products.php?id=${id}`)
+    fetch(`/api/products?id=${id}`)
       .then((res) => res.json())
       .then((data) => setProduct(() => data))
       .catch((err) => console.error(err));

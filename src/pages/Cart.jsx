@@ -11,7 +11,7 @@ const Cart = () => {
   let total = 0;
 
   useEffect(() => {
-    fetch("/api/routes/cart.php?getCartItems=true")
+    fetch("/api/cart?getCartItems=true")
       .then((response) => response.json())
       .then((data) => {
         setCartItems(data);
@@ -22,7 +22,7 @@ const Cart = () => {
   }, []);
 
   const handleRemoveFromCart = async (cartId) => {
-    const response = await fetch("/api/routes/cart.php", {
+    const response = await fetch("/api/cart", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

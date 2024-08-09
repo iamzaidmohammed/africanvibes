@@ -19,7 +19,7 @@ const ProductsCard = ({ image, name, price, id }) => {
     }
 
     // Fetch current cart items
-    const cartResponse = await fetch("/api/routes/cart.php?getCartItems=true");
+    const cartResponse = await fetch("/api/cart?getCartItems=true");
     const cartData = await cartResponse.json();
 
     // Check if the product is already in the cart
@@ -30,7 +30,7 @@ const ProductsCard = ({ image, name, price, id }) => {
       return;
     }
 
-    const response = await fetch("/api/routes/cart.php", {
+    const response = await fetch("/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
