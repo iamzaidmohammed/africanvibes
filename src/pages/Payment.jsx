@@ -30,7 +30,7 @@ const Payment = () => {
   return (
     <>
       <Helmet>
-        <title>Shipping Information | African Vibes</title>
+        <title>Payment Details | African Vibes</title>
       </Helmet>
 
       <main className="max-w-7xl md:mx-auto px-5 md:px-10 lg:px-20">
