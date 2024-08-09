@@ -22,7 +22,7 @@ const CartSummary = ({ items, total }) => {
         <p>₵{total}</p>
       </div>
 
-      <Link to="/checkout">
+      <Link to="/shipping-info">
         <button className="w-full bg-primary text-white p-2 mt-4 rounded-md">
           Proceed to Checkout
         </button>
