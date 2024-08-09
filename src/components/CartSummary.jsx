@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const CartSummary = ({ items, total }) => {
+  const location = useLocation();
+
   return (
     <div className="border border-gray-300 p-4 rounded-md">
       <h2 className="text-lg font-bold">Cart Summary</h2>
@@ -22,17 +24,21 @@ const CartSummary = ({ items, total }) => {
         <p>₵{total}</p>
       </div>
 
-      <Link to="/shipping-info">
+      <Link
+        to={location.pathname === "/shop/cart" ? "/shipping-info" : "/checkout"}
+      >
         <button className="w-full bg-primary text-white p-2 mt-4 rounded-md">
           Proceed to Checkout
         </button>
       </Link>
 
-      <Link to="/shop/products">
-        <button className="w-full bg-gray-300 text-black p-2 mt-2 rounded-md">
-          Continue Shopping
-        </button>
-      </Link>
+      {location.pathname === "/shop/cart" && (
+        <Link to="/shop/products">
+          <button className="w-full bg-gray-300 text-black p-2 mt-2 rounded-md">
+            Continue Shopping
+          </button>
+        </Link>
+      )}
     </div>
   );
 };
