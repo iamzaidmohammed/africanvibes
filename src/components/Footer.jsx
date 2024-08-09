@@ -4,6 +4,7 @@ import { AiFillInstagram } from "react-icons/ai";
 import { FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import NewsletterImg from "../assets/sec-img-2.jpg";
 
 const Footer = () => {
   return (
@@ -34,7 +35,7 @@ const Footer = () => {
           </div>
           <div className="hidden md:block md:w-1/3">
             <img
-              src="/src/assets/sec-img-2.jpg"
+              src={NewsletterImg}
               alt="Newsletter"
               className="w-full rounded-md"
             />
