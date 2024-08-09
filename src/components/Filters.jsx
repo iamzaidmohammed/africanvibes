@@ -12,7 +12,7 @@ const Filters = ({ CategorySelected }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
-    fetch("/api/routes/categories.php")
+    fetch("/api/categories")
       .then((res) => res.json())
       .then((data) => setCategories(() => data))
       .catch((err) => console.error(err));

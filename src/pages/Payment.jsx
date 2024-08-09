@@ -8,7 +8,7 @@ const Payment = () => {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    fetch("/api/routes/cart.php?getCartItems=true")
+    fetch("/api/cart?getCartItems=true")
       .then((response) => response.json())
       .then((data) => {
         setCartItems(data);

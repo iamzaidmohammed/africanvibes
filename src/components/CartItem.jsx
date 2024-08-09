@@ -12,7 +12,7 @@ const CartItem = ({ item, onRemove }) => {
   return (
     <div className="border-b border-gray-300 py-4 flex">
       <img
-        src={`/api/assets/images/${item.image}`}
+        src={`/api/assets/${item.image}`}
         alt={item.productName}
         className="w-20 h-20 object-cover"
       />

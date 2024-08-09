@@ -15,7 +15,7 @@ const Products = () => {
   // const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    fetch("/api/routes/products.php")
+    fetch("/api/products")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Network response was not ok");
@@ -71,7 +71,7 @@ const Products = () => {
                 <ProductsCard
                   key={product.id}
                   name={product.name}
-                  image={`/api/assets/images/${product.img}`}
+                  image={`/api/assets/${product.img}`}
                   price={product.price}
                   id={product.id}
                 />

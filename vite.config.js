@@ -11,7 +11,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/api": {
-        target: "http://localhost:80/african-vibes-ecommnerce-backend",
+        target: "http://localhost:80/african-vibes-ecommnerce-backend/public",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
