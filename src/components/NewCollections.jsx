@@ -1,22 +1,23 @@
 import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
+import img1 from "../assets/card-img.jpg";
+import img2 from "../assets/sec-img.jpg";
 
-// src/components/NewCollections.js
 const newCollections = [
-  { img: "/src/assets/card-img.jpg", title: "Tie & Dye", price: "$40.50" },
+  { img: img1, title: "Tie & Dye", price: "$40.50" },
   {
-    img: "/src/assets/sec-img.jpg",
+    img: img2,
     title: "Traditional Art",
     price: "$50.50",
   },
-  { img: "/src/assets/card-img.jpg", title: "Tie & Dye", price: "$40.50" },
+  { img: img1, title: "Tie & Dye", price: "$40.50" },
   {
-    img: "/src/assets/sec-img.jpg",
+    img: img2,
     title: "Traditional Art",
     price: "$50.50",
   },
-  { img: "/src/assets/sec-img.jpg", title: "Tie & Dye", price: "$40.50" },
-  { img: "/src/assets/card-img.jpg", title: "Tie & Dye", price: "$40.50" },
+  { img: img2, title: "Tie & Dye", price: "$40.50" },
+  { img: img1, title: "Tie & Dye", price: "$40.50" },
   // Add more collections as needed
 ];
 

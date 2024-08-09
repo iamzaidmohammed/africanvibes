@@ -1,14 +1,15 @@
-// src/components/Hero.js
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Slide1 from "../assets/hero.jpg";
+import Slide2 from "../assets/sec-img.jpg";
 
 const slides = [
   {
-    url: "/src/assets/hero.jpg",
+    url: Slide1,
     text: "Your Premier Destination for Authentic Indigenous and Traditional Products.",
   },
   {
-    url: "/src/assets/sec-img.jpg",
+    url: Slide2,
     text: "Explore Our Unique Collection of Handcrafted Items.",
   },
   // Add more slides as needed
