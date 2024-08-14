@@ -19,7 +19,7 @@ const ProductsCard = ({ image, name, price, id }) => {
     }
 
     // Fetch current cart items
-    const cartResponse = await fetch("/api/cart?getCartItems=true");
+    const cartResponse = await fetch(`/api/cart?id=${user.id}`);
     const cartData = await cartResponse.json();
 
     // Check if the product is already in the cart

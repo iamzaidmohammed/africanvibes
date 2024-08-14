@@ -9,12 +9,10 @@ const CartSummary = ({ items, total }) => {
       <h2 className="text-lg font-bold">Cart Summary</h2>
 
       {items.map((item) => (
-        <>
-          <div className="flex justify-between mt-4">
-            <p>{item.productName}</p>
-            <p>{item.price}</p>
-          </div>
-        </>
+        <div key={item.productID} className="flex justify-between mt-4">
+          <p>{item.productName}</p>
+          <p>{item.price}</p>
+        </div>
       ))}
 
       <div className="border-t border-gray-300 my-2"></div>

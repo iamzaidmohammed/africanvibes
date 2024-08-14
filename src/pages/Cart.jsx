@@ -5,13 +5,15 @@ import CartItem from "../components/CartItem.jsx";
 import CartSummary from "../components/CartSummary.jsx";
 import Footer from "../components/Footer.jsx";
 import { toast } from "react-toastify";
+import { useAuth } from "../services/authService.jsx";
 
 const Cart = () => {
+  const { user } = useAuth();
   const [cartItems, setCartItems] = useState([]);
   let total = 0;
 
   useEffect(() => {
-    fetch("/api/cart?getCartItems=true")
+    fetch(`/api/cart?id=${user.id}`)
       .then((response) => response.json())
       .then((data) => {
         setCartItems(data);
@@ -21,14 +23,28 @@ const Cart = () => {
       });
   }, []);
 
-  const handleRemoveFromCart = async (cartId) => {
+  const handleUpdateQuantity = async (productID, quantity) => {
+    await fetch(`/api/cart`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: user.id,
+        product_id: productID,
+        quantity: quantity,
+      }),
+    });
+  };
+
+  const handleRemoveFromCart = async (productID) => {
     const response = await fetch("/api/cart", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        cart_id: cartId,
+        product_id: productID,
       }),
     });
 
@@ -37,7 +53,7 @@ const Cart = () => {
     if (data.status === "success") {
       toast.success(data.message);
       setCartItems((prevItems) =>
-        prevItems.filter((item) => item.cartID !== cartId)
+        prevItems.filter((item) => item.productID !== productID)
       );
     }
   };
@@ -65,6 +81,7 @@ const Cart = () => {
                   key={item.cartID}
                   item={item}
                   onRemove={handleRemoveFromCart}
+                  onQuantityChange={handleUpdateQuantity}
                 />
               ))}
             </div>
