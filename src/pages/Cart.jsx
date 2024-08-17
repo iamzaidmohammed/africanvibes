@@ -10,7 +10,8 @@ import { useAuth } from "../services/authService.jsx";
 const Cart = () => {
   const { user } = useAuth();
   const [cartItems, setCartItems] = useState([]);
-  let total = 0;
+  const [total, setTotal] = useState(0);
+  // let total;
 
   useEffect(() => {
     fetch(`/api/cart?id=${user.id}`)
@@ -58,12 +59,9 @@ const Cart = () => {
     }
   };
 
-  if (cartItems) {
-    total = cartItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
-  }
+  // if (cartItems) {
+  //   total = cartItems.reduce((sum, item) => sum + item.total, 0);
+  // }
 
   return (
     <>
@@ -82,6 +80,7 @@ const Cart = () => {
                   item={item}
                   onRemove={handleRemoveFromCart}
                   onQuantityChange={handleUpdateQuantity}
+                  Total={setTotal}
                 />
               ))}
             </div>
