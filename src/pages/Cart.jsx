@@ -1,67 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import EmptyCart from "../assets/empty-cart.svg";
 import CartItem from "../components/CartItem.jsx";
 import CartSummary from "../components/CartSummary.jsx";
 import Footer from "../components/Footer.jsx";
-import { toast } from "react-toastify";
-import { useAuth } from "../services/authService.jsx";
+// import { toast } from "react-toastify";
+// import { useAuth } from "../services/authService.jsx";
+import { useCart } from "../services/cartService.jsx";
 
 const Cart = () => {
-  const { user } = useAuth();
-  const [cartItems, setCartItems] = useState([]);
+  const { cartItems, updateCartItem, removeFromCart } = useCart();
   const [total, setTotal] = useState(0);
-  // let total;
-
-  useEffect(() => {
-    fetch(`/api/cart?id=${user.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setCartItems(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching cart items:", error);
-      });
-  }, []);
-
-  const handleUpdateQuantity = async (productID, quantity) => {
-    await fetch(`/api/cart`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: user.id,
-        product_id: productID,
-        quantity: quantity,
-      }),
-    });
-  };
-
-  const handleRemoveFromCart = async (productID) => {
-    const response = await fetch("/api/cart", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        product_id: productID,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (data.status === "success") {
-      toast.success(data.message);
-      setCartItems((prevItems) =>
-        prevItems.filter((item) => item.productID !== productID)
-      );
-    }
-  };
-
-  // if (cartItems) {
-  //   total = cartItems.reduce((sum, item) => sum + item.total, 0);
-  // }
 
   return (
     <>
@@ -78,8 +27,8 @@ const Cart = () => {
                 <CartItem
                   key={item.cartID}
                   item={item}
-                  onRemove={handleRemoveFromCart}
-                  onQuantityChange={handleUpdateQuantity}
+                  onRemove={removeFromCart}
+                  onQuantityChange={updateCartItem}
                   Total={setTotal}
                 />
               ))}

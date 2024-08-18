@@ -3,9 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 
 const CartSummary = ({ items, total }) => {
   const location = useLocation();
-  // const [total, setTotal] = useState(item.total);
-
-  // console.log(total);
 
   return (
     <div className="border border-gray-300 p-4 rounded-md">
@@ -22,8 +19,7 @@ const CartSummary = ({ items, total }) => {
 
       <div className="flex justify-between font-bold">
         <p>Total</p>
-        <p>₵{total}</p>
-        {/* <p>₵{items.total.reduce((acc, curr) => acc + curr, 0)}</p> */}
+        <p>₵{total.toFixed(2)}</p>
       </div>
 
       <Link

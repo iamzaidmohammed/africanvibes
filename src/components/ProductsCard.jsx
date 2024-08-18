@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../services/authService";
-import { toast } from "react-toastify";
+import { useCart } from "../services/cartService";
 
 const ProductsCard = ({ image, name, price, id }) => {
   const { user } = useAuth();
-  // const { addToCart } = useCart();
+  const { addToCart } = useCart();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,37 +18,7 @@ const ProductsCard = ({ image, name, price, id }) => {
       return;
     }
 
-    // Fetch current cart items
-    const cartResponse = await fetch(`/api/cart?id=${user.id}`);
-    const cartData = await cartResponse.json();
-
-    // Check if the product is already in the cart
-    const productInCart = cartData.some((item) => item.productID === id);
-
-    if (productInCart) {
-      toast.info("Product is already in the cart.");
-      return;
-    }
-
-    const response = await fetch("/api/cart", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: user.id,
-        product_id: id,
-        quantity: 1,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (data.status === "success") {
-      toast.success(data.message);
-    } else {
-      toast.error(data.message);
-    }
+    addToCart(id);
   };
 
   return (

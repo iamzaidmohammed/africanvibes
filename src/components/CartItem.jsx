@@ -16,7 +16,6 @@ const CartItem = ({ item, onRemove, onQuantityChange, Total }) => {
 
     const updatedTotal = updatedQuantity * item.price;
     setTotal(updatedTotal);
-    // Total(updatedTotal);
 
     onQuantityChange(item.productID, updatedQuantity);
   };
