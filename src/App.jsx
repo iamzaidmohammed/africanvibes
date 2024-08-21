@@ -9,6 +9,8 @@ import MainLayout from "./layouts/MainLayout";
 import SignIn from "./pages/Signin.jsx";
 import SignUp from "./pages/Signup.jsx";
 import { AuthProvider } from "./services/authService";
+import { ProductProvider } from "./services/productService";
+import { CartProvider } from "./services/cartService";
 import About from "./pages/About.jsx";
 import Products from "./pages/Products.jsx";
 import ProductsDetails from "./pages/ProductsDetails.jsx";
@@ -16,7 +18,6 @@ import NotFound from "./pages/NotFound.jsx";
 import CartPage from "./pages/Cart.jsx";
 import Contact from "./pages/Contact.jsx";
 import Blog from "./pages/Blog.jsx";
-import { CartProvider } from "./services/cartService.jsx";
 import Shipping from "./pages/Shipping.jsx";
 import Payment from "./pages/Payment.jsx";
 
@@ -42,9 +43,11 @@ const router = createBrowserRouter(
 function App() {
   return (
     <AuthProvider>
-      <CartProvider>
-        <RouterProvider router={router} />
-      </CartProvider>
+      <ProductProvider>
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
+      </ProductProvider>
     </AuthProvider>
   );
 }

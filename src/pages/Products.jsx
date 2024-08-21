@@ -3,43 +3,45 @@ import ProductsCard from "../components/ProductsCard";
 import FlashSale from "../components/FlashSale";
 import Footer from "../components/Footer.jsx";
 import { Helmet } from "react-helmet";
-import { useEffect, useState } from "react";
-import Loading from "../components/Loading.jsx";
+import { useProduct } from "../services/productService.jsx";
+import { useState } from "react";
+// import Loading from "../components/Loading.jsx";
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { products } = useProduct();
+  // const [products, setProducts] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   // const [filteredProducts, setFilteredProducts] = useState([]);
 
-  useEffect(() => {
-    fetch("/api/products")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setProducts(() => data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(err);
-        setLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/products")
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setProducts(() => data);
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       setError(err);
+  //       setLoading(false);
+  //     });
+  // }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
   // Filter products based on the selected category
   const filteredProducts = selectedCategory

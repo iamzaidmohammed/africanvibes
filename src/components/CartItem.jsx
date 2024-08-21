@@ -1,12 +1,23 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-// import img from "../assets/offer-1.png";
 
-const CartItem = ({ item, onRemove }) => {
+const CartItem = ({ item, onRemove, onQuantityChange }) => {
   const [quantity, setQuantity] = useState(item.quantity);
+  const [total, setTotal] = useState(item.total);
 
   const handleRemoveFromCart = async () => {
-    await onRemove(item.cartID);
+    await onRemove(item.productID);
+  };
+
+  const handleUpdateQuantity = (e) => {
+    const updatedQuantity = parseInt(e.target.value);
+    setQuantity(updatedQuantity);
+
+    const updatedTotal = updatedQuantity * item.price;
+    setTotal(updatedTotal);
+
+    // Update the parent component with the new quantity and total
+    onQuantityChange(item.productID, updatedQuantity, updatedTotal);
   };
 
   return (
@@ -19,7 +30,7 @@ const CartItem = ({ item, onRemove }) => {
       <div className="flex-1 ml-4">
         <div className="flex justify-between">
           <h2 className="text-lg font-bold">{item.productName}</h2>
-          <p className="text-lg font-bold">${item.price}</p>
+          <p className="text-lg font-bold">${total.toFixed(2)}</p>
         </div>
         <p>Colour: {item.color}</p>
         <p>Size: {item.size}</p>
@@ -29,7 +40,7 @@ const CartItem = ({ item, onRemove }) => {
             type="number"
             min="1"
             value={quantity}
-            onChange={(e) => setQuantity(() => parseInt(e.target.value))}
+            onChange={handleUpdateQuantity}
             className="w-12 ml-2 border border-gray-300 rounded p-1"
           />
         </div>
@@ -48,6 +59,7 @@ const CartItem = ({ item, onRemove }) => {
 CartItem.propTypes = {
   item: PropTypes.object.isRequired,
   onRemove: PropTypes.func.isRequired,
+  onQuantityChange: PropTypes.func.isRequired,
 };
 
 export default CartItem;

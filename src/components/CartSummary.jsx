@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+// import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const CartSummary = ({ items, total }) => {
@@ -9,19 +10,17 @@ const CartSummary = ({ items, total }) => {
       <h2 className="text-lg font-bold">Cart Summary</h2>
 
       {items.map((item) => (
-        <>
-          <div className="flex justify-between mt-4">
-            <p>{item.productName}</p>
-            <p>{item.price}</p>
-          </div>
-        </>
+        <div key={item.productID} className="flex justify-between mt-4">
+          <p>{item.productName}</p>
+          <p>{item.total.toFixed(2)}</p>
+        </div>
       ))}
 
       <div className="border-t border-gray-300 my-2"></div>
 
       <div className="flex justify-between font-bold">
         <p>Total</p>
-        <p>₵{total}</p>
+        <p>₵{total.toFixed(2)}</p>
       </div>
 
       <Link
