@@ -11,17 +11,17 @@ export const CartProvider = ({ children }) => {
   const { user } = useAuth(); // Get the user from the auth context
   const [cartItems, setCartItems] = useState([]);
 
+  const fetchCartItems = async () => {
+    const response = await fetch(`/api/cart?id=${user.id}`);
+
+    const data = await response.json();
+    setCartItems(data);
+  };
+
   useEffect(() => {
     // Fetch cart items from backend if the user is logged in
     if (user) {
-      fetch(`/api/cart?id=${user.id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setCartItems(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching cart items:", error);
-        });
+      fetchCartItems();
     }
   }, [user]);
 
@@ -54,6 +54,7 @@ export const CartProvider = ({ children }) => {
 
     if (data.status === "success") {
       toast.success(data.message);
+      fetchCartItems();
     } else {
       toast.error(data.message);
     }

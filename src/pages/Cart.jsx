@@ -1,16 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import EmptyCart from "../assets/empty-cart.svg";
 import CartItem from "../components/CartItem.jsx";
 import CartSummary from "../components/CartSummary.jsx";
 import Footer from "../components/Footer.jsx";
-// import { toast } from "react-toastify";
-// import { useAuth } from "../services/authService.jsx";
 import { useCart } from "../services/cartService.jsx";
 
 const Cart = () => {
   const { cartItems, updateCartItem, removeFromCart } = useCart();
+  const [items, setItems] = useState(cartItems);
   const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setItems(cartItems);
+    calculateTotal(cartItems);
+  }, [cartItems]);
+
+  const calculateTotal = (items) => {
+    const newTotal = items.reduce((acc, item) => acc + item.total, 0);
+    setTotal(newTotal);
+  };
+
+  const handleQuantityChange = (productID, quantity, updatedTotal) => {
+    const updatedItems = items.map((item) =>
+      item.productID === productID
+        ? { ...item, quantity, total: updatedTotal }
+        : item
+    );
+    setItems(updatedItems);
+    calculateTotal(updatedItems);
+
+    // Optionally update the server/cart context with the new quantity
+    updateCartItem(productID, quantity);
+  };
 
   return (
     <>
@@ -20,21 +42,20 @@ const Cart = () => {
 
       <section className="max-w-7xl md:mx-auto px-5 md:px-10 lg:px-20">
         <h2 className="text-4xl font-bold mt-2 mb-4">Cart</h2>
-        {cartItems.length > 0 ? (
+        {items.length > 0 ? (
           <div className="md:flex gap-8">
             <div className="w-full md:w-3/4">
-              {cartItems.map((item) => (
+              {items.map((item) => (
                 <CartItem
                   key={item.cartID}
                   item={item}
                   onRemove={removeFromCart}
-                  onQuantityChange={updateCartItem}
-                  Total={setTotal}
+                  onQuantityChange={handleQuantityChange}
                 />
               ))}
             </div>
             <div className="w-full md:w-1/4">
-              <CartSummary items={cartItems} total={total} />
+              <CartSummary items={items} total={total} />
             </div>
           </div>
         ) : (
@@ -47,12 +68,6 @@ const Cart = () => {
             <p className="text-3xl text-center">Cart is empty</p>
           </div>
         )}
-        {/* <div className="w-full mt-8">
-          <h2 className="text-2xl text-center font-bold mb-4">
-            Recommended Products
-          </h2>
-         
-        </div> */}
         <Footer />
       </section>
     </>

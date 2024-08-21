@@ -1,10 +1,9 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const CartItem = ({ item, onRemove, onQuantityChange, Total }) => {
+const CartItem = ({ item, onRemove, onQuantityChange }) => {
   const [quantity, setQuantity] = useState(item.quantity);
   const [total, setTotal] = useState(item.total);
-  Total(item.total);
 
   const handleRemoveFromCart = async () => {
     await onRemove(item.productID);
@@ -17,7 +16,8 @@ const CartItem = ({ item, onRemove, onQuantityChange, Total }) => {
     const updatedTotal = updatedQuantity * item.price;
     setTotal(updatedTotal);
 
-    onQuantityChange(item.productID, updatedQuantity);
+    // Update the parent component with the new quantity and total
+    onQuantityChange(item.productID, updatedQuantity, updatedTotal);
   };
 
   return (
@@ -60,7 +60,6 @@ CartItem.propTypes = {
   item: PropTypes.object.isRequired,
   onRemove: PropTypes.func.isRequired,
   onQuantityChange: PropTypes.func.isRequired,
-  Total: PropTypes.func.isRequired,
 };
 
 export default CartItem;
