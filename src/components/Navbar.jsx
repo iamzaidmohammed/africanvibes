@@ -1,24 +1,26 @@
+import Logo from "../assets/logo.png";
+import { useAuth } from "../services/authService";
 import { useState, useEffect, useRef } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
+import Profile from "./Profile";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgShoppingCart } from "react-icons/cg";
 import { FaSearch, FaRegHeart } from "react-icons/fa";
-import Logo from "../assets/logo.png";
-import Profile from "./Profile";
-import { useAuth } from "../services/authService";
+import { useProduct } from "../services/productService";
 
 const Navbar = () => {
   const { user } = useAuth();
+  const { productsName } = useProduct();
   const [toggleMenu, setToggleMenu] = useState(false);
   const [toggleSearch, setToggleSearch] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
   const menuRef = useRef(null);
   const searchRef = useRef(null);
+  const inputRef = useRef(null);
 
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    setToggleSearch(false);
-  }, [pathname]);
 
   const linkClass = ({ isActive }) =>
     isActive
@@ -26,9 +28,25 @@ const Navbar = () => {
       : "py-2 px-4 text-xs lg:text-lg hover:bg-secondary";
 
   useEffect(() => {
+    setToggleSearch(false);
+    setSearchTerm("");
+  }, [pathname]);
+
+  useEffect(() => {
+    if (toggleSearch && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [toggleSearch]);
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setToggleMenu(false);
+      }
+
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setToggleSearch(false);
+        setSearchTerm("");
       }
     };
 
@@ -37,7 +55,21 @@ const Navbar = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [menuRef]);
+  }, [menuRef, searchRef]);
+
+  const handleSearch = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+
+    if (term !== "") {
+      const filteredNames = productsName.filter((name) =>
+        name.toLowerCase().includes(term.toLowerCase())
+      );
+      setSuggestions(filteredNames);
+    } else {
+      setSuggestions([]);
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-sm">
@@ -99,15 +131,13 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              {pathname == "/" || pathname == "/shop/products" ? (
+              {pathname === "/" || pathname === "/shop/products" ? (
                 <FaSearch
                   className="hidden sm:block cursor-pointer"
                   size={22}
                   onClick={() => setToggleSearch(!toggleSearch)}
                 />
-              ) : (
-                ""
-              )}
+              ) : null}
 
               <Link to="/products/likes">
                 <FaRegHeart
@@ -134,26 +164,50 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Overlay */}
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${
+          toggleSearch ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      ></div>
+
       {/* Search bar */}
-      <div ref={searchRef} className={`${!toggleSearch ? "hidden" : "block"}`}>
-        <div className="max-w-7xl md:mx-auto px-5 md:px-10 lg:px-20">
-          <div className="w-full my-5 py-2 flex justify-between">
+      <div
+        ref={searchRef}
+        className={`${
+          !toggleSearch ? "hidden" : "block"
+        } fixed top-0 inset-x-0 z-50 bg-white shadow-md`}
+      >
+        <div className="max-w-7xl md:mx-auto px-5 md:px-10 lg:px-20 py-4">
+          <div className="w-full flex justify-between">
             <input
               type="text"
               className="w-[85%] p-2 outline-none border-2 mr-2 lg:mr-0 focus:border-primary"
               placeholder="Search for products..."
+              value={searchTerm}
+              onChange={handleSearch}
+              ref={inputRef}
             />
             <button className="bg-primary text-white py-2 px-10 rounded-sm">
               Search
             </button>
           </div>
+          {searchTerm && (
+            <div className="w-full mt-2 bg-white border border-gray-200 rounded shadow-lg">
+              {suggestions.map((name, index) => (
+                <p key={index} className="p-2 cursor-pointer hover:bg-gray-100">
+                  {name}
+                </p>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
       {/* mobile navigation */}
       <div
         ref={menuRef}
-        className={`fixed right-3 z-40 w-80 bg-gray-100 overflow-hidden flex flex-col lg:hidden gap-12  origin-top duration-700  ${
+        className={`fixed right-3 z-40 w-80 bg-gray-100 overflow-hidden flex flex-col lg:hidden gap-12 origin-top duration-700 ${
           !toggleMenu ? "h-0" : "h-44"
         }`}
       >
