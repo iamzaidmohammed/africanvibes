@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgShoppingCart } from "react-icons/cg";
 import { FaSearch, FaRegHeart } from "react-icons/fa";
@@ -10,7 +10,15 @@ import { useAuth } from "../services/authService";
 const Navbar = () => {
   const { user } = useAuth();
   const [toggleMenu, setToggleMenu] = useState(false);
+  const [toggleSearch, setToggleSearch] = useState(false);
   const menuRef = useRef(null);
+  const searchRef = useRef(null);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setToggleSearch(false);
+  }, [pathname]);
 
   const linkClass = ({ isActive }) =>
     isActive
@@ -91,14 +99,17 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              <Link to="/search">
+              {pathname == "/" || pathname == "/shop/products" ? (
                 <FaSearch
                   className="hidden sm:block cursor-pointer"
                   size={22}
+                  onClick={() => setToggleSearch(!toggleSearch)}
                 />
-              </Link>
+              ) : (
+                ""
+              )}
 
-              <Link to="/shop/products/likes">
+              <Link to="/products/likes">
                 <FaRegHeart
                   className="hidden sm:block cursor-pointer"
                   size={22}
@@ -120,6 +131,22 @@ const Navbar = () => {
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Search bar */}
+      <div ref={searchRef} className={`${!toggleSearch ? "hidden" : "block"}`}>
+        <div className="max-w-7xl md:mx-auto px-5 md:px-10 lg:px-20">
+          <div className="w-full my-5 py-2 flex justify-between">
+            <input
+              type="text"
+              className="w-[85%] p-2 outline-none border-2 mr-2 lg:mr-0 focus:border-primary"
+              placeholder="Search for products..."
+            />
+            <button className="bg-primary text-white py-2 px-10 rounded-sm">
+              Search
+            </button>
+          </div>
         </div>
       </div>
 

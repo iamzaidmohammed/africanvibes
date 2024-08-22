@@ -1,13 +1,4 @@
 import PropTypes from "prop-types";
-// import CardImage from "../assets/card-img.jpg";
-// import Rating from "@mui/material/Rating";
-// import { styled } from "@mui/material/styles";
-
-// const CustomRating = styled(Rating)({
-//   "& .MuiRating-iconFilled": {
-//     color: "#775454",
-//   },
-// });
 
 const ProductCard = ({ name, image, price /* rating*/ }) => {
   return (
