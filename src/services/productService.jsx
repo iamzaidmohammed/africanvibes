@@ -11,6 +11,7 @@ export const useProduct = () => useContext(ProductContext);
 export const ProductProvider = ({ children }) => {
   //   const { user } = useAuth(); // Get the user from the auth context
   const [products, setProducts] = useState([]);
+  const [productsName, setProductsName] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -25,6 +26,9 @@ export const ProductProvider = ({ children }) => {
       .then((data) => {
         setProducts(() => data);
         setLoading(false);
+
+        const names = data.map((product) => product.name);
+        setProductsName(names);
       })
       .catch((err) => {
         console.error(err);
@@ -45,6 +49,7 @@ export const ProductProvider = ({ children }) => {
     <ProductContext.Provider
       value={{
         products,
+        productsName,
       }}
     >
       {children}

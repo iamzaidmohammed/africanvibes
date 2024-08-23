@@ -1,52 +1,38 @@
-import FilterSection from "../components/Filters.jsx";
-import ProductsCard from "../components/ProductsCard";
-import FlashSale from "../components/FlashSale";
-import Footer from "../components/Footer.jsx";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useProduct } from "../services/productService.jsx";
-import { useState } from "react";
-// import Loading from "../components/Loading.jsx";
+import ProductsCard from "../components/ProductsCard";
+import FilterSection from "../components/Filters.jsx";
+import FlashSale from "../components/FlashSale";
+import Footer from "../components/Footer.jsx";
+import { useLocation } from "react-router-dom";
 
 const Products = () => {
   const { products } = useProduct();
-  // const [products, setProducts] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // const [filteredProducts, setFilteredProducts] = useState([]);
+  const location = useLocation();
 
-  // useEffect(() => {
-  //   fetch("/api/products")
-  //     .then((res) => {
-  //       if (!res.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setProducts(() => data);
-  //       setLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       setError(err);
-  //       setLoading(false);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const search = params.get("search");
+    if (search) {
+      setSearchQuery(search.toLowerCase());
+    }
+  }, [location.search]);
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
+  // Filter products based on the selected category and search query
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory = selectedCategory
+      ? product.categoryId == selectedCategory[0]
+      : true;
+    const matchesSearchQuery = searchQuery
+      ? product.name.toLowerCase().includes(searchQuery)
+      : true;
 
-  // if (error) {
-  //   return <div>Error: {error.message}</div>;
-  // }
-
-  // Filter products based on the selected category
-  const filteredProducts = selectedCategory
-    ? products.filter((product) => product.categoryId == selectedCategory[0])
-    : products;
+    return matchesCategory && matchesSearchQuery;
+  });
 
   return (
     <>
@@ -66,7 +52,7 @@ const Products = () => {
             <h1 className="text-2xl font-bold mb-4">
               {selectedCategory
                 ? `${selectedCategory[1]} (${filteredProducts.length})`
-                : `All Products (${products.length})`}
+                : `All Products (${filteredProducts.length})`}
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {filteredProducts.map((product) => (
