@@ -1,7 +1,7 @@
 import Logo from "../assets/logo.png";
 import { useAuth } from "../services/authService";
 import { useState, useEffect, useRef } from "react";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import Profile from "./Profile";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgShoppingCart } from "react-icons/cg";
@@ -21,6 +21,7 @@ const Navbar = () => {
   const inputRef = useRef(null);
 
   const { pathname } = useLocation();
+  const navigate = useNavigate(); // Added for navigation
 
   const linkClass = ({ isActive }) =>
     isActive
@@ -71,6 +72,15 @@ const Navbar = () => {
     }
   };
 
+  // Handle search submission
+  const searchProduct = (e) => {
+    e.preventDefault();
+    if (searchTerm) {
+      navigate(`/shop/products?search=${encodeURIComponent(searchTerm)}`);
+      setToggleSearch(false);
+    }
+  };
+
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="max-w-7xl flex items-center md:px-5 lg:px-16 xl:mx-auto">
@@ -80,8 +90,8 @@ const Navbar = () => {
             {/* logo */}
             <div>
               <NavLink
-                href="/"
-                className="flex gap-1 font-bold text-gray-700 items-center "
+                to="/"
+                className="flex gap-1 font-bold text-gray-700 items-center"
               >
                 <img
                   src={Logo}
@@ -133,17 +143,14 @@ const Navbar = () => {
             <div className="flex items-center gap-4">
               {pathname === "/" || pathname === "/shop/products" ? (
                 <FaSearch
-                  className="hidden sm:block cursor-pointer"
+                  className="cursor-pointer"
                   size={22}
                   onClick={() => setToggleSearch(!toggleSearch)}
                 />
               ) : null}
 
               <Link to="/products/likes">
-                <FaRegHeart
-                  className="hidden sm:block cursor-pointer"
-                  size={22}
-                />
+                <FaRegHeart className="cursor-pointer" size={22} />
               </Link>
 
               <Link to="/shop/cart">
@@ -179,7 +186,11 @@ const Navbar = () => {
         } fixed top-0 inset-x-0 z-50 bg-white shadow-md`}
       >
         <div className="max-w-7xl md:mx-auto px-5 md:px-10 lg:px-20 py-4">
-          <div className="w-full flex justify-between">
+          <form
+            method="GET"
+            className="w-full flex justify-between"
+            onSubmit={searchProduct}
+          >
             <input
               type="text"
               className="w-[85%] p-2 outline-none border-2 mr-2 lg:mr-0 focus:border-primary"
@@ -188,14 +199,27 @@ const Navbar = () => {
               onChange={handleSearch}
               ref={inputRef}
             />
-            <button className="bg-primary text-white py-2 px-10 rounded-sm">
+            <button
+              type="submit"
+              className="bg-primary text-white py-2 px-10 rounded-sm"
+            >
               Search
             </button>
-          </div>
+          </form>
+
           {searchTerm && (
             <div className="w-full mt-2 bg-white border border-gray-200 rounded shadow-lg">
               {suggestions.map((name, index) => (
-                <p key={index} className="p-2 cursor-pointer hover:bg-gray-100">
+                <p
+                  key={index}
+                  className="p-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => {
+                    navigate(
+                      `/shop/products?search=${encodeURIComponent(name)}`
+                    );
+                    setToggleSearch(false);
+                  }} // Navigate to selected product
+                >
                   {name}
                 </p>
               ))}
