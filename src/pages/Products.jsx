@@ -25,10 +25,10 @@ const Products = () => {
   // Filter products based on the selected category and search query
   const filteredProducts = products.filter((product) => {
     const matchesCategory = selectedCategory
-      ? product.categoryId == selectedCategory[0]
+      ? product.categoryId === selectedCategory[0]
       : true;
     const matchesSearchQuery = searchQuery
-      ? product.name.toLowerCase().includes(searchQuery)
+      ? product.product_name.toLowerCase().includes(searchQuery)
       : true;
 
     return matchesCategory && matchesSearchQuery;
@@ -59,7 +59,11 @@ const Products = () => {
                 <ProductsCard
                   key={product.id}
                   name={product.name}
-                  image={`/api/assets/${product.img}`}
+                  image={
+                    product.imgs && product.imgs.includes(",")
+                      ? `/api/assets/${product.imgs.split(",")[0]}`
+                      : `/api/assets/${product.imgs || "default-image.jpg"}`
+                  }
                   price={product.price}
                   id={product.id}
                 />
@@ -73,7 +77,6 @@ const Products = () => {
           </main>
         </div>
         <FlashSale />
-
         <Footer />
       </section>
     </>

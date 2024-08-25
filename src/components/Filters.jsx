@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import { useProduct } from "../services/productService";
 
 const Filters = ({ CategorySelected }) => {
+  const { categories } = useProduct();
   const [isPriceOpen, setIsPriceOpen] = useState(true);
   const [isColourOpen, setIsColourOpen] = useState(true);
   const [isSizeOpen, setIsSizeOpen] = useState(true);
   const [isProductTagsOpen, setIsProductTagsOpen] = useState(true);
 
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  useEffect(() => {
-    fetch("/api/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(() => data))
-      .catch((err) => console.error(err));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/categories")
+  //     .then((res) => res.json())
+  //     .then((data) => setCategories(() => data))
+  //     .catch((err) => console.error(err));
+  // }, []);
 
   useEffect(() => {
     CategorySelected(selectedCategory);

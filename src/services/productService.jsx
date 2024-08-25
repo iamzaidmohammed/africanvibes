@@ -11,6 +11,7 @@ export const useProduct = () => useContext(ProductContext);
 export const ProductProvider = ({ children }) => {
   //   const { user } = useAuth(); // Get the user from the auth context
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [productsName, setProductsName] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -37,6 +38,13 @@ export const ProductProvider = ({ children }) => {
       });
   }, []);
 
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((data) => setCategories(() => data))
+      .catch((err) => console.error(err));
+  }, []);
+
   if (loading) {
     return <Loading />;
   }
@@ -49,6 +57,7 @@ export const ProductProvider = ({ children }) => {
     <ProductContext.Provider
       value={{
         products,
+        categories,
         productsName,
       }}
     >
