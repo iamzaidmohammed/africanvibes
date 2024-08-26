@@ -25,10 +25,10 @@ const Products = () => {
   // Filter products based on the selected category and search query
   const filteredProducts = products.filter((product) => {
     const matchesCategory = selectedCategory
-      ? product.categoryId === selectedCategory[0]
+      ? product.categoryId == selectedCategory[0]
       : true;
     const matchesSearchQuery = searchQuery
-      ? product.product_name.toLowerCase().includes(searchQuery)
+      ? product.name.toLowerCase().includes(searchQuery)
       : true;
 
     return matchesCategory && matchesSearchQuery;

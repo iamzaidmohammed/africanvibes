@@ -1,12 +1,14 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { useAuth } from "../services/authService";
 
 const CartItem = ({ item, onRemove, onQuantityChange }) => {
+  const { user } = useAuth();
   const [quantity, setQuantity] = useState(item.quantity);
   const [total, setTotal] = useState(item.total);
 
   const handleRemoveFromCart = async () => {
-    await onRemove(item.productID);
+    await onRemove(user.id, item.productID);
   };
 
   const handleUpdateQuantity = (e) => {
@@ -23,7 +25,7 @@ const CartItem = ({ item, onRemove, onQuantityChange }) => {
   return (
     <div className="border-b border-gray-300 py-4 flex">
       <img
-        src={`/api/assets/${item.image}`}
+        src={`/api/assets/${item.image.split(",")[0]}`}
         alt={item.productName}
         className="w-20 h-20 object-cover"
       />
