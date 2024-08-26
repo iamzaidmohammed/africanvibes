@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FaStar } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -7,10 +7,18 @@ import Footer from "../components/Footer";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useCart } from "../services/cartService";
+import { useAuth } from "../services/authService";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const { user } = useAuth();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     fetch(`/api/products?id=${id}`)
@@ -27,6 +35,22 @@ const ProductDetails = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+  };
+
+  const handleAddToCart = async () => {
+    if (!user) {
+      navigate("/users/signin", {
+        state: { from: location },
+      });
+      return;
+    }
+
+    addToCart(product.id, parseInt(quantity));
+  };
+
+  const updateQuantity = (e) => {
+    const newQuatity = parseInt(e.target.value);
+    setQuantity(newQuatity);
   };
 
   return (
@@ -84,7 +108,7 @@ const ProductDetails = () => {
               ${product.price}
             </p>
             <p className="mt-1 text-gray-600">
-              Product Code: {product.code} | {product.stock} In Stock
+              Product Code: {product.code} | {product.stock} left in stock
             </p>
 
             <div className="flex items-center mt-2">
@@ -99,13 +123,18 @@ const ProductDetails = () => {
             <div className="mt-4 flex items-center">
               <input
                 type="number"
-                defaultValue="1"
+                min={1}
+                value={quantity}
+                onChange={updateQuantity}
                 className="w-16 p-2 text-center border rounded-md"
               />
               <button className="ml-4 px-4 py-2 text-white bg-primary rounded-md">
                 Buy Now
               </button>
-              <button className="ml-2 px-4 py-2 bg-primary text-white rounded-md">
+              <button
+                className="ml-2 px-4 py-2 bg-primary text-white rounded-md"
+                onClick={handleAddToCart}
+              >
                 Add to Cart
               </button>
             </div>

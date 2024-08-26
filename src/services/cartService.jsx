@@ -25,7 +25,7 @@ export const CartProvider = ({ children }) => {
     }
   }, [user]);
 
-  const addToCart = async (id) => {
+  const addToCart = async (id, quantity = 1) => {
     // Fetch current cart items
     const cartResponse = await fetch(`/api/cart?id=${user.id}`);
     const cartData = await cartResponse.json();
@@ -46,7 +46,7 @@ export const CartProvider = ({ children }) => {
       body: JSON.stringify({
         user_id: user.id,
         product_id: id,
-        quantity: 1,
+        quantity: quantity,
       }),
     });
 
