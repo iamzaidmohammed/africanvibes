@@ -9,16 +9,7 @@ const Filters = ({ CategorySelected }) => {
   const [isColourOpen, setIsColourOpen] = useState(true);
   const [isSizeOpen, setIsSizeOpen] = useState(true);
   const [isProductTagsOpen, setIsProductTagsOpen] = useState(true);
-
-  // const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-
-  // useEffect(() => {
-  //   fetch("/api/categories")
-  //     .then((res) => res.json())
-  //     .then((data) => setCategories(() => data))
-  //     .catch((err) => console.error(err));
-  // }, []);
 
   useEffect(() => {
     CategorySelected(selectedCategory);
