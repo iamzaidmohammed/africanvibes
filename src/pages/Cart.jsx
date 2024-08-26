@@ -47,7 +47,7 @@ const Cart = () => {
             <div className="w-full md:w-3/4">
               {items.map((item) => (
                 <CartItem
-                  key={item.cartID}
+                  key={item.productID}
                   item={item}
                   onRemove={removeFromCart}
                   onQuantityChange={handleQuantityChange}

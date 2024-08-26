@@ -61,26 +61,33 @@ export const CartProvider = ({ children }) => {
   };
 
   const updateCartItem = async (productID, quantity) => {
-    await fetch(`/api/cart`, {
+    const response = await fetch(`/api/cart`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: user.id,
         product_id: productID,
         quantity: quantity,
       }),
     });
+
+    const data = await response.json();
+
+    // console.log(data);
+    if (data.status === "success") {
+      fetchCartItems();
+    }
   };
 
-  const removeFromCart = async (productID) => {
+  const removeFromCart = async (userId, productID) => {
     const response = await fetch("/api/cart", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        user_id: userId,
         product_id: productID,
       }),
     });
