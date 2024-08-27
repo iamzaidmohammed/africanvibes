@@ -1,43 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CartItem from "../components/CartItem";
 import ShippingInfo from "../components/ShippingInfo";
-import { toast } from "react-toastify";
 import Footer from "../components/Footer";
 import { Helmet } from "react-helmet";
+import { useCart } from "../services/cartService";
 
 const Shipping = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const { cartItems, updateCartItem, removeFromCart } = useCart();
+  const [items, setItems] = useState(cartItems);
 
-  useEffect(() => {
-    fetch("/api/cart?getCartItems=true")
-      .then((response) => response.json())
-      .then((data) => {
-        setCartItems(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching cart items:", error);
-      });
-  }, []);
+  const handleQuantityChange = (productID, quantity, updatedTotal) => {
+    const updatedItems = items.map((item) =>
+      item.productID === productID
+        ? { ...item, quantity, total: updatedTotal }
+        : item
+    );
+    setItems(updatedItems);
 
-  const handleRemoveFromCart = async (cartId) => {
-    const response = await fetch("/api/cart", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cart_id: cartId,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (data.status === "success") {
-      toast.success(data.message);
-      setCartItems((prevItems) =>
-        prevItems.filter((item) => item.cartID !== cartId)
-      );
-    }
+    // Optionally update the server/cart context with the new quantity
+    updateCartItem(productID, quantity);
   };
 
   return (
@@ -51,13 +32,14 @@ const Shipping = () => {
           <ShippingInfo />
 
           {cartItems.length > 0 && (
-            <div className="md:flex gap-8 mt-5">
+            <div className="md:flex gap-8 mt-16 border-l-2 px-2">
               <div className="w-full">
                 {cartItems.map((item) => (
                   <CartItem
-                    key={item.cartID}
+                    key={item.productID}
                     item={item}
-                    onRemove={handleRemoveFromCart}
+                    onRemove={removeFromCart}
+                    onQuantityChange={handleQuantityChange}
                   />
                 ))}
               </div>
