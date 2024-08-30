@@ -7,6 +7,7 @@ import {
 import { AuthProvider } from "./services/authService";
 import { ProductProvider } from "./services/productService";
 import { CartProvider } from "./services/cartService";
+import { OrderProvider } from "./services/order.jsx";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
 import About from "./pages/About.jsx";
@@ -45,7 +46,9 @@ function App() {
     <AuthProvider>
       <ProductProvider>
         <CartProvider>
-          <RouterProvider router={router} />
+          <OrderProvider>
+            <RouterProvider router={router} />
+          </OrderProvider>
         </CartProvider>
       </ProductProvider>
     </AuthProvider>
