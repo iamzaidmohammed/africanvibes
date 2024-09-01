@@ -1,11 +1,6 @@
 import PropTypes from "prop-types";
-// import { useEffect, useState } from "react";
-// import { useEffect } from "react";
 
 const OrderDetails = ({ order, items }) => {
-  //   console.log(order);
-  //   console.log(items);
-
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg md:w-2/3">
       <h2 className="text-4xl font-semibold mb-4">Order #{order.order_id}</h2>
@@ -47,27 +42,6 @@ const OrderDetails = ({ order, items }) => {
           </div>
         ))}
       </div>
-
-      {/* <div className="border-t border-gray-200 pt-4 mt-4">
-        <div className="flex flex-col">
-          <div className="flex justify-between items-center">
-            <p className="text-lg font-semibold text-gray-700">Subtotal:</p>
-            <p className="text-lg font-semibold text-gray-700">
-              ${order.total_amount}
-            </p>
-          </div>
-          <div className="flex justify-between items-center">
-            <p className="text-lg font-semibold text-gray-700">Shipping:</p>
-            <p className="text-lg font-semibold text-gray-700">$8.00</p>
-          </div>
-          <div className="flex justify-between items-center">
-            <p className="text-lg font-semibold text-gray-700">Total:</p>
-            <p className="text-lg font-semibold text-gray-700">
-              ${(order.total_amount * 8.0).toFixed(2)}
-            </p>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

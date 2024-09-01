@@ -1,12 +1,7 @@
-// import { useEffect, useState } from "react";
-// import PaymentForm from "../components/PaymentForm";
 import Footer from "../components/Footer";
 import { Helmet } from "react-helmet";
-// import CartSummary from "../components/CartSummary";
-// import { useCart } from "../services/cartService";
 import OrderDetails from "../components/OrderDetails";
 import OrderSummary from "../components/OrderSummary.jsx";
-// import { useAuth } from "../services/authService";
 import { useOrder } from "../services/order";
 
 const Payment = () => {

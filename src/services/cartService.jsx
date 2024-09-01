@@ -10,6 +10,7 @@ export const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }) => {
   const { user } = useAuth(); // Get the user from the auth context
   const [cartItems, setCartItems] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const fetchCartItems = async () => {
     const response = await fetch(`/api/cart?id=${user.id}`);
@@ -18,10 +19,15 @@ export const CartProvider = ({ children }) => {
     setCartItems(data);
   };
 
+  const calculateTotal = (items) => {
+    const newTotal = items.reduce((acc, item) => acc + item.total, 0);
+    setTotal(newTotal);
+  };
+
   useEffect(() => {
-    // Fetch cart items from backend if the user is logged in
     if (user) {
       fetchCartItems();
+      calculateTotal(cartItems);
     }
   }, [user]);
 
@@ -106,6 +112,8 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cartItems,
+        total,
+        calculateTotal,
         addToCart,
         updateCartItem,
         removeFromCart,

@@ -7,19 +7,20 @@ import Footer from "../components/Footer.jsx";
 import { useCart } from "../services/cartService.jsx";
 
 const Cart = () => {
-  const { cartItems, updateCartItem, removeFromCart } = useCart();
+  const { cartItems, calculateTotal, total, updateCartItem, removeFromCart } =
+    useCart();
   const [items, setItems] = useState(cartItems);
-  const [total, setTotal] = useState(0);
+  // const [total, setTotal] = useState(0);
 
   useEffect(() => {
     setItems(cartItems);
     calculateTotal(cartItems);
   }, [cartItems]);
 
-  const calculateTotal = (items) => {
-    const newTotal = items.reduce((acc, item) => acc + item.total, 0);
-    setTotal(newTotal);
-  };
+  // const calculateTotal = (items) => {
+  //   const newTotal = items.reduce((acc, item) => acc + item.total, 0);
+  //   setTotal(newTotal);
+  // };
 
   const handleQuantityChange = (productID, quantity, updatedTotal) => {
     const updatedItems = items.map((item) =>
@@ -29,8 +30,6 @@ const Cart = () => {
     );
     setItems(updatedItems);
     calculateTotal(updatedItems);
-
-    // Optionally update the server/cart context with the new quantity
     updateCartItem(productID, quantity);
   };
 

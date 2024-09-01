@@ -24,7 +24,7 @@ const OrderSummary = ({ order }) => {
         <div className="flex justify-between items-center">
           <p className="text-md font-semibold text-gray-700">Total:</p>
           <p className="text-md font-semibold text-gray-700">
-            ${(order.total_amount * 8.0).toFixed(2)}
+            ${(parseInt(order.total_amount) + 8.0).toFixed(2)}
           </p>
         </div>
       </div>

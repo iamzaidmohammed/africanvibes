@@ -1,9 +1,11 @@
 import { useAuth } from "../services/authService";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useOrder } from "../services/order";
 
 const ShippingInfo = () => {
   const { user } = useAuth();
+  const { createOrder } = useOrder();
   const [address, setAddress] = useState({});
   const [shippingInfo, setShippingInfo] = useState({
     firstName: address.firstName || "",
@@ -73,7 +75,10 @@ const ShippingInfo = () => {
     const data = await response.json();
 
     if (data.status === "success") {
-      navigate("/payment", { replace: true });
+      const result = await createOrder(user.id);
+      if (result.status === "success") {
+        navigate("/payment", { replace: true });
+      }
     } else {
       setError(data.message);
     }
