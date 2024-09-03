@@ -10,13 +10,13 @@ export const useOrder = () => useContext(OrderContext);
 export const OrderProvider = ({ children }) => {
   const { user } = useAuth();
   const { total } = useCart();
-  const [orders, setOrders] = useState({});
+  const [orders, setOrders] = useState([]);
 
   const fetchOrderDetails = async () => {
     try {
       const response = await fetch(`/api/orders?id=${user.id}`);
       const data = await response.json();
-      setOrders(data);
+      setOrders(() => data);
     } catch (error) {
       console.error("Error fetching order details:", error);
     }
@@ -51,8 +51,24 @@ export const OrderProvider = ({ children }) => {
     }
   };
 
+  const updateOrderItems = async (userId) => {
+    const response = await fetch("/api/orders", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: userId,
+      }),
+    });
+
+    const data = response.json();
+
+    return { status: data.status };
+  };
+
   return (
-    <OrderContext.Provider value={{ orders, createOrder }}>
+    <OrderContext.Provider value={{ orders, createOrder, updateOrderItems }}>
       {children}
     </OrderContext.Provider>
   );
