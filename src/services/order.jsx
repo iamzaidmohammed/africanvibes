@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useAuth } from "./authService";
 import { useCart } from "./cartService";
+import Loading from "../components/Loading";
 
 const OrderContext = createContext();
 
@@ -11,22 +12,31 @@ export const OrderProvider = ({ children }) => {
   const { user } = useAuth();
   const { total } = useCart();
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchOrderDetails = async () => {
     try {
       const response = await fetch(`/api/orders?id=${user.id}`);
       const data = await response.json();
       setOrders(() => data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching order details:", error);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     if (user) {
       fetchOrderDetails();
+    } else {
+      setLoading(false);
     }
   }, [user]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   const createOrder = async (userId, totalAmount = total) => {
     if (orders.order) {

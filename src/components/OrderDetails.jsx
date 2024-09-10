@@ -6,7 +6,6 @@ const OrderDetails = ({ order, items }) => {
       <h2 className="text-4xl font-semibold mb-4">Order #{order.orderId}</h2>
 
       <div className="mb-4">
-        {/* <p className="text-sm text-gray-500">Order: #{order.order_id}</p> */}
         <p className="text-sm text-gray-500">
           Order Date: {new Date(order.createdAt).toLocaleDateString()}
         </p>
@@ -15,7 +14,7 @@ const OrderDetails = ({ order, items }) => {
 
       <div className="border-t border-gray-200 pt-4">
         {items.map((item) => (
-          <div key={item.orderItemId}>
+          <div key={item.orderItemsId}>
             <div className="border-b border-gray-300 py-4 flex">
               <img
                 src={`/api/assets/${item.productImages.split(",")[0]}`}

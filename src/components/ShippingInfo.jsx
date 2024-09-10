@@ -31,21 +31,43 @@ const ShippingInfo = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/shipping?id=${user.id}`);
-      const data = await response.json();
-      setAddress(() => data[0]);
+      try {
+        const response = await fetch(`/api/shipping?id=${user.id}`);
+        const data = await response.json();
 
-      setShippingInfo({
-        firstName: data[0].firstName || "",
-        lastName: data[0].lastName || "",
-        email: data[0].email || "",
-        phone: data[0].phone || "1",
-        detailedAddress: data[0].detailedAddress || "",
-        country: data[0].country || "",
-        province: data[0].province || "",
-        city: data[0].city || "",
-        postalCode: data[0].postalCode || "",
-      });
+        // Check if data exists and has at least one entry
+        if (data && data.length > 0) {
+          setAddress(data[0]);
+
+          setShippingInfo({
+            firstName: data[0].firstName || "",
+            lastName: data[0].lastName || "",
+            email: data[0].email || "",
+            phone: data[0].phone || "",
+            detailedAddress: data[0].detailedAddress || "",
+            country: data[0].country || "",
+            province: data[0].province || "",
+            city: data[0].city || "",
+            postalCode: data[0].postalCode || "",
+          });
+        } else {
+          // Handle the case where no address data is returned
+          setAddress({});
+          setShippingInfo({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            phone: user.phone,
+            detailedAddress: "",
+            country: "",
+            province: "",
+            city: "",
+            postalCode: "",
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching shipping info:", error);
+      }
     };
     fetchData();
   }, [user.id]);
@@ -77,7 +99,7 @@ const ShippingInfo = () => {
     if (data.status === "success") {
       const result = await createOrder(user.id);
       if (result.status === "success") {
-        navigate("/payment", { replace: true });
+        navigate("/order", { replace: true });
       }
     } else {
       setError(data.message);
