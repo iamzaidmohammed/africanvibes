@@ -8,6 +8,7 @@ import { AuthProvider } from "./services/authService";
 import { ProductProvider } from "./services/productService";
 import { CartProvider } from "./services/cartService";
 import { OrderProvider } from "./services/order.jsx";
+import { PaymentProvider } from "./services/payment.jsx";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
 import About from "./pages/About.jsx";
@@ -19,6 +20,7 @@ import CartPage from "./pages/Cart.jsx";
 import Contact from "./pages/Contact.jsx";
 import Blog from "./pages/Blog.jsx";
 import Shipping from "./pages/Shipping.jsx";
+import Order from "./pages/Order.jsx";
 import Payment from "./pages/Payment.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
@@ -35,6 +37,7 @@ const router = createBrowserRouter(
       <Route path="/blog" element={<Blog />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/shipping-info" element={<Shipping />} />
+      <Route path="/order" element={<Order />} />
       <Route path="/payment" element={<Payment />} />
       <Route path="*" element={<NotFound />} />
     </Route>
@@ -47,7 +50,9 @@ function App() {
       <ProductProvider>
         <CartProvider>
           <OrderProvider>
-            <RouterProvider router={router} />
+            <PaymentProvider>
+              <RouterProvider router={router} />
+            </PaymentProvider>
           </OrderProvider>
         </CartProvider>
       </ProductProvider>

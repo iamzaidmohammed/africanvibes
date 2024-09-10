@@ -1,7 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-// import { useAuth } from "../services/authService";
 import PropTypes from "prop-types";
-// import { toast } from "react-toastify";
 import Loading from "../components/Loading";
 
 const ProductContext = createContext();
@@ -9,7 +7,6 @@ const ProductContext = createContext();
 export const useProduct = () => useContext(ProductContext);
 
 export const ProductProvider = ({ children }) => {
-  //   const { user } = useAuth(); // Get the user from the auth context
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [productsName, setProductsName] = useState([]);

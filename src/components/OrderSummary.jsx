@@ -1,10 +1,7 @@
 import PropTypes from "prop-types";
-// import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const OrderSummary = ({ order }) => {
-  //   const location = useLocation();
-
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <h2 className="text-xl font-bold mb-3">Summary</h2>
@@ -29,9 +26,9 @@ const OrderSummary = ({ order }) => {
         </div>
       </div>
 
-      <Link to="/checkout">
+      <Link to="/payment">
         <button className="w-full bg-primary text-white p-2 mt-4 rounded-md">
-          Proceed to Checkout
+          Proceed to Payment
         </button>
       </Link>
     </div>
