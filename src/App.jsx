@@ -22,6 +22,7 @@ import Blog from "./pages/Blog.jsx";
 import Shipping from "./pages/Shipping.jsx";
 import Order from "./pages/Order.jsx";
 import Payment from "./pages/Payment.jsx";
+import Checkout from "./pages/Checkout.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 const router = createBrowserRouter(
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
       <Route path="/shipping-info" element={<Shipping />} />
       <Route path="/order" element={<Order />} />
       <Route path="/payment" element={<Payment />} />
+      <Route path="/checkout" element={<Checkout />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )
