@@ -23,6 +23,7 @@ import Shipping from "./pages/Shipping.jsx";
 import Order from "./pages/Order.jsx";
 import Payment from "./pages/Payment.jsx";
 import Checkout from "./pages/Checkout.jsx";
+import Likes from "./pages/Likes.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 const router = createBrowserRouter(
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
       <Route path="/order" element={<Order />} />
       <Route path="/payment" element={<Payment />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/products/likes" element={<Likes />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

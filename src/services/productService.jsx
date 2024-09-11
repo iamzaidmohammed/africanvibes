@@ -1,46 +1,79 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Loading from "../components/Loading";
+import { useAuth } from "./authService.jsx";
 
 const ProductContext = createContext();
 
 export const useProduct = () => useContext(ProductContext);
 
 export const ProductProvider = ({ children }) => {
+  const { user } = useAuth();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [likedProducts, setLikedProducts] = useState([]);
   const [productsName, setProductsName] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetch("/api/products")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setProducts(() => data);
-        setLoading(false);
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch("/api/products");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setProducts(() => data);
+      setProductsName(() => data.map((product) => product.name));
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setError(error);
+      setLoading(false);
+    }
+  };
 
-        const names = data.map((product) => product.name);
-        setProductsName(names);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(err);
-        setLoading(false);
-      });
-  }, []);
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch("/api/categories");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setCategories(() => data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  const fetchLikedProducts = async () => {
+    try {
+      const response = await fetch(`/api/likes?id=${user.id}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setLikedProducts(() => data);
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching liked products:", error);
+      setError(error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetch("/api/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(() => data))
-      .catch((err) => console.error(err));
-  }, []);
+    fetchProducts();
+    fetchCategories();
+
+    if (user) {
+      fetchLikedProducts();
+    }
+  }, [user]);
 
   if (loading) {
     return <Loading />;
@@ -56,6 +89,8 @@ export const ProductProvider = ({ children }) => {
         products,
         categories,
         productsName,
+        likedProducts,
+        fetchLikedProducts,
       }}
     >
       {children}

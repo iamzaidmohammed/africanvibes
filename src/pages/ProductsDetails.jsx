@@ -9,25 +9,75 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useCart } from "../services/cartService";
 import { useAuth } from "../services/authService";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { useProduct } from "../services/productService";
+import { toast } from "react-toastify";
+import Loading from "../components/Loading";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { user } = useAuth();
   const { addToCart } = useCart();
+  const { likedProducts, fetchLikedProducts } = useProduct();
   const [product, setProduct] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [liked, setLiked] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const location = useLocation();
 
+  const getSingleProduct = async () => {
+    try {
+      const response = await fetch(`/api/products?id=${id}`);
+      const data = await response.json();
+      setProduct(() => data[0]);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetch(`/api/products?id=${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProduct(() => data[0]);
-      })
-      .catch((err) => console.error("Fetch error:", err));
+    getSingleProduct();
   }, [id]);
+
+  useEffect(() => {
+    if (likedProducts.length > 0) {
+      setLiked(
+        likedProducts
+          .map((product) => product.product_id)
+          .includes(parseInt(id))
+      );
+    }
+  }, [likedProducts, id]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  const handleLike = async () => {
+    const like = !liked;
+
+    const response = await fetch("/api/likes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        like: like,
+        userId: user.id,
+        productId: id,
+      }),
+    });
+
+    const data = await response.json();
+    setLiked(like);
+
+    if (data.status) {
+      toast.success(data.message);
+      fetchLikedProducts();
+    }
+  };
 
   const settings = {
     dots: true,
@@ -104,9 +154,25 @@ const ProductDetails = () => {
           <div className="md:w-1/2">
             <h1 className="text-2xl font-bold">{product.name}</h1>
             <p className="mt-2 text-gray-600"></p>
-            <p className="mt-4 text-3xl font-bold text-gray-900">
-              ${product.price}
-            </p>
+
+            <div className="flex items-center gap-28 mt-4">
+              <p className="text-3xl font-bold text-gray-900">
+                ${product.price}
+              </p>
+
+              {liked ? (
+                <FaHeart
+                  className="text-red-500 font-bold rounded-full p-1 cursor-pointer text-3xl  top-2 right-2 z-10"
+                  onClick={handleLike}
+                />
+              ) : (
+                <FaRegHeart
+                  className="text-black font-bold rounded-full p-1 cursor-pointer text-3xl  top-2 right-2 z-10"
+                  onClick={handleLike}
+                />
+              )}
+            </div>
+
             <p className="mt-1 text-gray-600">
               Product Code: {product.code} | {product.stock} left in stock
             </p>
