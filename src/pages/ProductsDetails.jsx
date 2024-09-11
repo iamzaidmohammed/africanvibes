@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useCart } from "../services/cartService";
 import { useAuth } from "../services/authService";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -16,6 +17,7 @@ const ProductDetails = () => {
   const { addToCart } = useCart();
   const [product, setProduct] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [liked, setLiked] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,6 +30,10 @@ const ProductDetails = () => {
       })
       .catch((err) => console.error("Fetch error:", err));
   }, [id]);
+
+  const handleLike = () => {
+    setLiked(!liked);
+  };
 
   const settings = {
     dots: true,
@@ -104,9 +110,24 @@ const ProductDetails = () => {
           <div className="md:w-1/2">
             <h1 className="text-2xl font-bold">{product.name}</h1>
             <p className="mt-2 text-gray-600"></p>
-            <p className="mt-4 text-3xl font-bold text-gray-900">
-              ${product.price}
-            </p>
+
+            <div className="flex items-center gap-28 mt-4">
+              <p className="text-3xl font-bold text-gray-900">
+                ${product.price}
+              </p>
+              {liked ? (
+                <FaHeart
+                  className="text-red-500 font-bold bg-white rounded-full p-1 cursor-pointer text-3xl z-10"
+                  onClick={handleLike}
+                />
+              ) : (
+                <FaRegHeart
+                  className="text-black font-bold bg-white rounded-full p-1 cursor-pointer text-3xl z-10"
+                  onClick={handleLike}
+                />
+              )}
+            </div>
+
             <p className="mt-1 text-gray-600">
               Product Code: {product.code} | {product.stock} left in stock
             </p>

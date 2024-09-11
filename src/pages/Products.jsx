@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useProduct } from "../services/productService.jsx";
-import ProductsCard from "../components/ProductsCard";
+import ProductCard from "../components/ProductCard";
 import FilterSection from "../components/Filters.jsx";
 import FlashSale from "../components/FlashSale";
 import Footer from "../components/Footer.jsx";
@@ -54,9 +54,9 @@ const Products = () => {
                 ? `${selectedCategory[1]} (${filteredProducts.length})`
                 : `All Products (${filteredProducts.length})`}
             </h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredProducts.map((product) => (
-                <ProductsCard
+                <ProductCard
                   key={product.id}
                   name={product.name}
                   image={
