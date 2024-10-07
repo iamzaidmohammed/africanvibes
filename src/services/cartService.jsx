@@ -13,7 +13,7 @@ export const CartProvider = ({ children }) => {
   const [total, setTotal] = useState(0);
 
   const fetchCartItems = async () => {
-    const response = await fetch(`/api/cart?id=${user.id}`);
+    const response = await fetch(`/backend/cart?id=${user.id}`);
 
     const data = await response.json();
     setCartItems(data);
@@ -33,7 +33,7 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = async (id, quantity = 1) => {
     // Fetch current cart items
-    const cartResponse = await fetch(`/api/cart?id=${user.id}`);
+    const cartResponse = await fetch(`/backend/cart?id=${user.id}`);
     const cartData = await cartResponse.json();
 
     // Check if the product is already in the cart
@@ -44,7 +44,7 @@ export const CartProvider = ({ children }) => {
       return;
     }
 
-    const response = await fetch("/api/cart", {
+    const response = await fetch("/backend/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const updateCartItem = async (productID, quantity) => {
-    const response = await fetch(`/api/cart`, {
+    const response = await fetch(`/backend/cart`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +87,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = async (userId, productID) => {
-    const response = await fetch("/api/cart", {
+    const response = await fetch("/backend/cart", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

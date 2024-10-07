@@ -61,8 +61,8 @@ const Products = () => {
                   name={product.name}
                   image={
                     product.imgs && product.imgs.includes(",")
-                      ? `/api/assets/${product.imgs.split(",")[0]}`
-                      : `/api/assets/${product.imgs || "default-image.jpg"}`
+                      ? `/backend/assets/${product.imgs.split(",")[0]}`
+                      : `/backend/assets/${product.imgs || "default-image.jpg"}`
                   }
                   price={product.price}
                   id={product.id}

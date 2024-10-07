@@ -29,7 +29,7 @@ const ProductDetails = () => {
 
   const getSingleProduct = async () => {
     try {
-      const response = await fetch(`/api/products?id=${id}`);
+      const response = await fetch(`/backend/products?id=${id}`);
       const data = await response.json();
       setProduct(() => data[0]);
       setLoading(false);
@@ -60,7 +60,7 @@ const ProductDetails = () => {
   const handleLike = async () => {
     const like = !liked;
 
-    const response = await fetch("/api/likes", {
+    const response = await fetch("/backend/likes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -133,7 +133,7 @@ const ProductDetails = () => {
                 {product.imgs.split(",").map((img, index) => (
                   <div key={index} inert="true">
                     <img
-                      src={`/api/assets/${img}`}
+                      src={`/backend/assets/${img}`}
                       alt={product.name}
                       className="w-full rounded-lg"
                     />
@@ -143,7 +143,7 @@ const ProductDetails = () => {
             ) : (
               <div inert="true">
                 <img
-                  src={`/api/assets/${product.imgs}`}
+                  src={`/backend/assets/${product.imgs}`}
                   alt={product.name}
                   className="w-full rounded-lg"
                 />

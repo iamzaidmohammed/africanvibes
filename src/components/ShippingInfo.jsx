@@ -32,7 +32,7 @@ const ShippingInfo = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/shipping?id=${user.id}`);
+        const response = await fetch(`/backend/shipping?id=${user.id}`);
         const data = await response.json();
 
         // Check if data exists and has at least one entry
@@ -75,7 +75,7 @@ const ShippingInfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("/api/shipping", {
+    const response = await fetch("/backend/shipping", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

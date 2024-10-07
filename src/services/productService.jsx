@@ -18,7 +18,7 @@ export const ProductProvider = ({ children }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("/api/products");
+      const response = await fetch("/backend/products");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -35,7 +35,7 @@ export const ProductProvider = ({ children }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch("/api/categories");
+      const response = await fetch("/backend/categories");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -51,7 +51,7 @@ export const ProductProvider = ({ children }) => {
 
   const fetchLikedProducts = async () => {
     try {
-      const response = await fetch(`/api/likes?id=${user.id}`);
+      const response = await fetch(`/backend/likes?id=${user.id}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

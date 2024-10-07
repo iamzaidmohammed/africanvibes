@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     confirmPassword
   ) => {
     try {
-      const response = await fetch("/api/auth", {
+      const response = await fetch("/backend/auth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
 
   const signin = async (email, password) => {
     try {
-      const response = await fetch("/api/auth", {
+      const response = await fetch("/backend/auth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

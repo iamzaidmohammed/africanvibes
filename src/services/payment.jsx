@@ -8,7 +8,7 @@ export const usePayment = () => useContext(PaymentContext);
 export const PaymentProvider = ({ children }) => {
   const verifyPayment = async (reference, orderId, amount, userId, cartId) => {
     try {
-      const response = await fetch("/api/payment", {
+      const response = await fetch("/backend/payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

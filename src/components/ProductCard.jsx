@@ -35,7 +35,7 @@ const ProductCard = ({ name, image, price, id /* rating*/ }) => {
 
   const handleLike = async () => {
     const like = !liked;
-    const response = await fetch("/api/likes", {
+    const response = await fetch("/backend/likes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

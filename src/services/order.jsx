@@ -16,7 +16,7 @@ export const OrderProvider = ({ children }) => {
 
   const fetchOrderDetails = async () => {
     try {
-      const response = await fetch(`/api/orders?id=${user.id}`);
+      const response = await fetch(`/backend/orders?id=${user.id}`);
       const data = await response.json();
       setOrders(() => data);
       setLoading(false);
@@ -44,7 +44,7 @@ export const OrderProvider = ({ children }) => {
       fetchOrderDetails();
       return { status: "success" };
     } else {
-      const response = await fetch(`/api/orders`, {
+      const response = await fetch(`/backend/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export const OrderProvider = ({ children }) => {
   };
 
   const updateOrderItems = async (userId) => {
-    const response = await fetch("/api/orders", {
+    const response = await fetch("/backend/orders", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
