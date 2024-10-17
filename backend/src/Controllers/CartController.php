@@ -56,13 +56,13 @@ class CartController
 
             foreach ($cart as $item) {
                 $items[] = [
-                    'cartID' => $item['cart_id'],           // Accessing 
-                    'productID' => $item['product_id'],     // Accessing 'product_id' directly
-                    'quantity' => $item['quantity'],        // Accessing 'quantity' directly
-                    'productName' => $item['product_name'], // Accessing 'product_name' directly
-                    'price' => $item['price'],              // Accessing 'price' directly
+                    'cartID' => $item['cart_id'],
+                    'productID' => $item['product_id'],
+                    'quantity' => $item['quantity'],
+                    'productName' => $item['product_name'],
+                    'price' => $item['price'],
                     'total' => $item['price'] * $item['quantity'],
-                    'image' => $item['product_images'],      // Accessing 'product_image' directly
+                    'image' => $item['product_images'],
                 ];
             };
             return $items;

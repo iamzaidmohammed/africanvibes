@@ -15,7 +15,10 @@ export const CartProvider = ({ children }) => {
   const api = import.meta.env.VITE_API_URL;
 
   const fetchCartItems = async () => {
-    const fetchUrl = appEnv === 'local' ? `/api/cart?id=${user.id}` : `${api}/cart?id=${user.id}`;
+    const fetchUrl =
+      appEnv === "local"
+        ? `/api/cart?id=${user.id}`
+        : `${api}/cart?id=${user.id}`;
 
     const response = await fetch(fetchUrl);
 
@@ -36,7 +39,10 @@ export const CartProvider = ({ children }) => {
   }, [user]);
 
   const addToCart = async (id, quantity = 1) => {
-    const fetchUrl = appEnv === 'local' ? `/api/cart?id=${user.id}` : `${api}/cart?id=${user.id}`;
+    const fetchUrl =
+      appEnv === "local"
+        ? `/api/cart?id=${user.id}`
+        : `${api}/cart?id=${user.id}`;
 
     // Fetch current cart items
     const cartResponse = await fetch(fetchUrl);
@@ -50,7 +56,7 @@ export const CartProvider = ({ children }) => {
       return;
     }
 
-    const addFetchUrl = appEnv === 'local' ? `/api/cart` : `${api}/cart`;
+    const addFetchUrl = appEnv === "local" ? `/api/cart` : `${api}/cart`;
 
     const response = await fetch(addFetchUrl, {
       method: "POST",
@@ -75,7 +81,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const updateCartItem = async (productID, quantity) => {
-    const fetchUrl = appEnv === 'local' ? `/api/cart` : `${api}/cart`;
+    const fetchUrl = appEnv === "local" ? `/api/cart` : `${api}/cart`;
 
     const response = await fetch(fetchUrl, {
       method: "PUT",
@@ -97,7 +103,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = async (userId, productID) => {
-    const fetchUrl = appEnv === 'local' ? `/api/cart` : `${api}/cart`;
+    const fetchUrl = appEnv === "local" ? `/api/cart` : `${api}/cart`;
 
     const response = await fetch(fetchUrl, {
       method: "DELETE",

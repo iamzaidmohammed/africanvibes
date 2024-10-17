@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 
 const OrderDetails = ({ order, items }) => {
+  const imgUrl = import.meta.env.VITE_IMG_URL;
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg md:w-2/3">
       <h2 className="text-4xl font-semibold mb-4">Order #{order.orderId}</h2>
@@ -17,7 +19,7 @@ const OrderDetails = ({ order, items }) => {
           <div key={item.orderItemsId}>
             <div className="border-b border-gray-300 py-4 flex">
               <img
-                src={`/api/assets/${item.productImages.split(",")[0]}`}
+                src={`${imgUrl}/${item.productImages.split(",")[0]}`}
                 alt={item.productName}
                 className="w-20 h-20 object-cover"
               />
