@@ -11,9 +11,13 @@ export const CartProvider = ({ children }) => {
   const { user } = useAuth(); // Get the user from the auth context
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
+  const appEnv = import.meta.env.VITE_APP_ENV;
+  const api = import.meta.env.VITE_API_URL;
 
   const fetchCartItems = async () => {
-    const response = await fetch(`/backend/cart?id=${user.id}`);
+    const fetchUrl = appEnv === 'local' ? `/api/cart?id=${user.id}` : `${api}/cart?id=${user.id}`;
+
+    const response = await fetch(fetchUrl);
 
     const data = await response.json();
     setCartItems(data);
@@ -32,8 +36,10 @@ export const CartProvider = ({ children }) => {
   }, [user]);
 
   const addToCart = async (id, quantity = 1) => {
+    const fetchUrl = appEnv === 'local' ? `/api/cart?id=${user.id}` : `${api}/cart?id=${user.id}`;
+
     // Fetch current cart items
-    const cartResponse = await fetch(`/backend/cart?id=${user.id}`);
+    const cartResponse = await fetch(fetchUrl);
     const cartData = await cartResponse.json();
 
     // Check if the product is already in the cart
@@ -44,7 +50,9 @@ export const CartProvider = ({ children }) => {
       return;
     }
 
-    const response = await fetch("/backend/cart", {
+    const addFetchUrl = appEnv === 'local' ? `/api/cart` : `${api}/cart`;
+
+    const response = await fetch(addFetchUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +75,9 @@ export const CartProvider = ({ children }) => {
   };
 
   const updateCartItem = async (productID, quantity) => {
-    const response = await fetch(`/backend/cart`, {
+    const fetchUrl = appEnv === 'local' ? `/api/cart` : `${api}/cart`;
+
+    const response = await fetch(fetchUrl, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +97,9 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = async (userId, productID) => {
-    const response = await fetch("/backend/cart", {
+    const fetchUrl = appEnv === 'local' ? `/api/cart` : `${api}/cart`;
+
+    const response = await fetch(fetchUrl, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

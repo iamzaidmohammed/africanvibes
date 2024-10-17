@@ -61,8 +61,8 @@ const Products = () => {
                   name={product.name}
                   image={
                     product.imgs && product.imgs.includes(",")
-                      ? `/backend/assets/${product.imgs.split(",")[0]}`
-                      : `/backend/assets/${product.imgs || "default-image.jpg"}`
+                      ? `http://34.19.111.243/africanvibes/backend/assets/${product.imgs.split(",")[0]}`
+                      : `http://34.19.111.243/africanvibes/backend/assets/${product.imgs || "default-image.jpg"}`
                   }
                   price={product.price}
                   id={product.id}

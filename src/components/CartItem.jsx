@@ -25,7 +25,7 @@ const CartItem = ({ item, onRemove, onQuantityChange }) => {
   return (
     <div className="border-b border-gray-300 py-4 flex">
       <img
-        src={`/backend/assets/${item.image.split(",")[0]}`}
+        src={`/api/assets/${item.image.split(",")[0]}`}
         alt={item.productName}
         className="w-20 h-20 object-cover"
       />

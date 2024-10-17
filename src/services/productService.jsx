@@ -15,10 +15,14 @@ export const ProductProvider = ({ children }) => {
   const [productsName, setProductsName] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const appEnv = import.meta.env.VITE_APP_ENV;
+  const api = import.meta.env.VITE_API_URL;
 
   const fetchProducts = async () => {
+    const fetchUrl = appEnv === 'local' ? '/api/products' : `${api}/products`;
+
     try {
-      const response = await fetch("/backend/products");
+      const response = await fetch(fetchUrl);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -34,8 +38,10 @@ export const ProductProvider = ({ children }) => {
   };
 
   const fetchCategories = async () => {
+    const fetchUrl = appEnv === 'local' ? '/api/categories' : `${api}/categories`;
+
     try {
-      const response = await fetch("/backend/categories");
+      const response = await fetch(fetchUrl);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -50,8 +56,10 @@ export const ProductProvider = ({ children }) => {
   };
 
   const fetchLikedProducts = async () => {
+    const fetchUrl = appEnv === 'local' ? `/api/likes?id=${user.id}` : `${api}/likes?id=${user.id}`;
+
     try {
-      const response = await fetch(`/backend/likes?id=${user.id}`);
+      const response = await fetch(fetchUrl);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

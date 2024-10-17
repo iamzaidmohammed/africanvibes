@@ -9,10 +9,6 @@ require_once __DIR__ . '/../init.php';
 
 class Dbh
 {
-    // protected $host = $_ENV['DB_HOST'];
-    // protected $dbname = $_ENV['DB_NAME'];
-    // protected $username = $_ENV['DB_USER'];
-    // protected $password = $_ENV['DB_PASSWORD'];
     protected $pdo;
 
     // Constructor to initialize the database connection

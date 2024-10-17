@@ -12,6 +12,8 @@ const ProductCard = ({ name, image, price, id /* rating*/ }) => {
   const { addToCart } = useCart();
   const { likedProducts, fetchLikedProducts } = useProduct();
   const [liked, setLiked] = useState(null);
+  const appEnv = import.meta.env.VITE_APP_ENV;
+  const api = import.meta.env.VITE_API_URL;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,8 +36,9 @@ const ProductCard = ({ name, image, price, id /* rating*/ }) => {
   }, [likedProducts, id]);
 
   const handleLike = async () => {
+    const fetchUrl = appEnv === 'local' ? `/api/likes` : `${api}/likes`;
     const like = !liked;
-    const response = await fetch("/backend/likes", {
+    const response = await fetch(fetchUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

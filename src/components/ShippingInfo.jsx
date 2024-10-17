@@ -21,6 +21,8 @@ const ShippingInfo = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const appEnv = import.meta.env.VITE_APP_ENV;
+  const api = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setShippingInfo({
@@ -31,8 +33,10 @@ const ShippingInfo = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const fetchUrl = appEnv === 'local' ? `/api/shipping?id=${user.id}` : `${api}/shipping?id=${user.id}`;
+
       try {
-        const response = await fetch(`/backend/shipping?id=${user.id}`);
+        const response = await fetch(fetchUrl);
         const data = await response.json();
 
         // Check if data exists and has at least one entry
@@ -75,7 +79,9 @@ const ShippingInfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("/backend/shipping", {
+    const fetchUrl = appEnv === 'local' ? `/api/shipping` : `${api}/shipping`;
+
+    const response = await fetch(fetchUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

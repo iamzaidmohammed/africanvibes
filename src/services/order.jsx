@@ -13,10 +13,14 @@ export const OrderProvider = ({ children }) => {
   const { total } = useCart();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const appEnv = import.meta.env.VITE_APP_ENV;
+  const api = import.meta.env.VITE_API_URL;
 
   const fetchOrderDetails = async () => {
+    const fetchUrl = appEnv === 'local' ? `/api/orders?id=${user.id}` : `${api}/orders?id=${user.id}`;
+
     try {
-      const response = await fetch(`/backend/orders?id=${user.id}`);
+      const response = await fetch(fetchUrl);
       const data = await response.json();
       setOrders(() => data);
       setLoading(false);
@@ -39,12 +43,14 @@ export const OrderProvider = ({ children }) => {
   }
 
   const createOrder = async (userId, totalAmount = total) => {
+    const fetchUrl = appEnv === 'local' ? `/api/orders` : `${api}/orders`;
+
     if (orders.order) {
       console.log("order exists");
       fetchOrderDetails();
       return { status: "success" };
     } else {
-      const response = await fetch(`/backend/orders`, {
+      const response = await fetch(fetchUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +68,9 @@ export const OrderProvider = ({ children }) => {
   };
 
   const updateOrderItems = async (userId) => {
-    const response = await fetch("/backend/orders", {
+    const fetchUrl = appEnv === 'local' ? `/api/orders` : `${api}/orders`;
+
+    const response = await fetch(fetchUrl, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

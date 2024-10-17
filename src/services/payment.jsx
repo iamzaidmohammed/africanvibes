@@ -6,9 +6,14 @@ const PaymentContext = createContext();
 export const usePayment = () => useContext(PaymentContext);
 
 export const PaymentProvider = ({ children }) => {
+  const appEnv = import.meta.env.VITE_APP_ENV;
+  const api = import.meta.env.VITE_API_URL;
+
   const verifyPayment = async (reference, orderId, amount, userId, cartId) => {
     try {
-      const response = await fetch("/backend/payment", {
+      const fetchUrl = appEnv === 'local' ? '/api/payment' : `${api}/payment`;
+
+      const response = await fetch(fetchUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

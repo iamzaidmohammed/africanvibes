@@ -17,7 +17,7 @@ const OrderDetails = ({ order, items }) => {
           <div key={item.orderItemsId}>
             <div className="border-b border-gray-300 py-4 flex">
               <img
-                src={`/backend/assets/${item.productImages.split(",")[0]}`}
+                src={`/api/assets/${item.productImages.split(",")[0]}`}
                 alt={item.productName}
                 className="w-20 h-20 object-cover"
               />

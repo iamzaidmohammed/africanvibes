@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
   });
+  const appEnv = import.meta.env.VITE_APP_ENV;
+  const api = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (user) {
@@ -29,8 +31,10 @@ export const AuthProvider = ({ children }) => {
     password,
     confirmPassword
   ) => {
+    const fetchUrl = appEnv === 'local' ? `/api/auth` : `${api}/auth`;
+
     try {
-      const response = await fetch("/backend/auth", {
+      const response = await fetch(fetchUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,8 +65,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signin = async (email, password) => {
+    const fetchUrl = appEnv === 'local' ? `/api/auth` : `${api}/auth`;
+
     try {
-      const response = await fetch("/backend/auth", {
+      const response = await fetch(fetchUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

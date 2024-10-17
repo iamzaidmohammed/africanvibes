@@ -1,27 +1,27 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-// echo $_ENV['PAYSTACK_SECRET_KEY'];
-
 // Define the base directory
-$baseDir = '/african-vibes-ecommnerce-backend/public';
+$baseDir = '/africanvibes/backend/index.php';
 
 // Set up routing
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = rtrim($uri, '/');
 $uri = strtok($uri, '?'); // Ignore query parameters
 
-// Remove the base directory from the URI
+
+// // Remove the base directory from the URI
 if (strpos($uri, $baseDir) === 0) {
     $uri = substr($uri, strlen($baseDir));
+    // echo $uri;
 }
 
 // Define the path to the routes folder
-$routesPath = __DIR__ . '/../src/routes';
+$routesPath = __DIR__ . '/src/routes';
 
 switch ($uri) {
     case '/auth':
@@ -29,6 +29,7 @@ switch ($uri) {
         break;
     case '/products':
         require $routesPath . '/products.php';
+        // echo 'products';
         break;
     case '/categories':
         require $routesPath . '/categories.php';
