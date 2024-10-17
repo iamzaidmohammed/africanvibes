@@ -227,3 +227,6 @@
 2024-10-17 17:50:03 - SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-10-17T15:49:55.000Z' for column 'payment_date' at row 1
 2024-10-17 17:50:21 - SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-10-17T15:50:14.000Z' for column 'payment_date' at row 1
 2024-10-17 17:50:21 - SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-10-17T15:50:14.000Z' for column 'payment_date' at row 1
+2024-10-17 18:01:14 - SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-10-17T16:01:06.000Z' for column 'payment_date' at row 1
+2024-10-17 18:01:27 - SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-10-17T16:01:23.000Z' for column 'payment_date' at row 1
+2024-10-17 18:01:27 - SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2024-10-17T16:01:23.000Z' for column 'payment_date' at row 1

@@ -135,6 +135,7 @@ export const CartProvider = ({ children }) => {
         addToCart,
         updateCartItem,
         removeFromCart,
+        fetchCartItems,
       }}
     >
       {children}

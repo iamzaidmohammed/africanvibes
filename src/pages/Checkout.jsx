@@ -1,7 +1,16 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { useCart } from "../services/cartService";
 
 const Checkout = () => {
+  const { fetchCartItems } = useCart();
+  const navigate = useNavigate();
+
+  const fetchCart = () => {
+    fetchCartItems();
+    navigate("/");
+  };
+
   return (
     <>
       <Helmet>
@@ -16,9 +25,12 @@ const Checkout = () => {
           Thank you for entrusting your care to us. Please be patient as we
           process your items as quickly as possible.
         </p>
-        <Link to="/" className="px-4 py-2 bg-primary text-white rounded">
+        <button
+          onClick={fetchCart}
+          className="px-4 py-2 bg-primary text-white rounded"
+        >
           Go to Homepage
-        </Link>
+        </button>
       </section>
     </>
   );
