@@ -4,6 +4,7 @@ import ProductCard from "../components/ProductCard";
 
 const Likes = () => {
   const { likedProducts, products } = useProduct();
+  const imgUrl = import.meta.env.VITE_IMG_URL;
 
   const savedProducts = products.filter((product) =>
     likedProducts
@@ -33,8 +34,8 @@ const Likes = () => {
                   name={product.name}
                   image={
                     product.imgs && product.imgs.includes(",")
-                      ? `http://34.19.111.243/africanvibes/backend/assets/${product.imgs.split(",")[0]}`
-                      : `http://34.19.111.243/africanvibes/backend/assets/${product.imgs || "default-image.jpg"}`
+                      ? `${imgUrl}/${product.imgs.split(",")[0]}`
+                      : `${imgUrl}/${product.imgs || "default-image.jpg"}`
                   }
                   price={product.price}
                   id={product.id}

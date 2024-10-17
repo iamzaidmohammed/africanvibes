@@ -11,7 +11,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/api": {
-        target: "http://34.19.111.243/africanvibes/backend/index.php",
+        target: "http://localhost/africanvibes/backend/index.php",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
