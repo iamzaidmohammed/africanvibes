@@ -25,12 +25,16 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const appEnv = import.meta.env.VITE_APP_ENV;
   const api = import.meta.env.VITE_API_URL;
+  const imgUrl = import.meta.env.VITE_IMG_URL;
 
   const navigate = useNavigate();
   const location = useLocation();
 
   const getSingleProduct = async () => {
-    const fetchUrl = appEnv === 'local' ? `/api/products?id=${id}` : `${api}/products?id=${id}`;
+    const fetchUrl =
+      appEnv === "local"
+        ? `/api/products?id=${id}`
+        : `${api}/products?id=${id}`;
 
     try {
       const response = await fetch(fetchUrl);
@@ -62,7 +66,7 @@ const ProductDetails = () => {
   }
 
   const handleLike = async () => {
-    const fetchUrl = appEnv === 'local' ? `/api/likes` : `${api}/likes`;
+    const fetchUrl = appEnv === "local" ? `/api/likes` : `${api}/likes`;
     const like = !liked;
 
     const response = await fetch(fetchUrl, {
@@ -138,7 +142,7 @@ const ProductDetails = () => {
                 {product.imgs.split(",").map((img, index) => (
                   <div key={index} inert="true">
                     <img
-                      src={`http://34.19.111.243/africanvibes/backend/assets/${img}`}
+                      src={`${imgUrl}/${img}`}
                       alt={product.name}
                       className="w-full rounded-lg"
                     />
@@ -148,7 +152,7 @@ const ProductDetails = () => {
             ) : (
               <div inert="true">
                 <img
-                  src={`http://34.19.111.243/africanvibes/backend/assets/${product.imgs}`}
+                  src={`${imgUrl}/${product.imgs}`}
                   alt={product.name}
                   className="w-full rounded-lg"
                 />

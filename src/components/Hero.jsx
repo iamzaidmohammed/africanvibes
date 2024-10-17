@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Slide1 from "../assets/hero.jpg";
-import Slide2 from "../assets/sec-img.jpg";
+import Slide1 from "../assets/slide1.jpg";
+import Slide2 from "../assets/slide2.jpg";
+import Slide3 from "../assets/slide3.jpg";
+import Slide4 from "../assets/slide4.jpg";
+import Slide5 from "../assets/slide5.jpg";
 
 const slides = [
   {
@@ -10,6 +13,18 @@ const slides = [
   },
   {
     url: Slide2,
+    text: "Explore Our Unique Collection of Handcrafted Items.",
+  },
+  {
+    url: Slide3,
+    text: "Explore Our Unique Collection of Handcrafted Items.",
+  },
+  {
+    url: Slide4,
+    text: "Explore Our Unique Collection of Handcrafted Items.",
+  },
+  {
+    url: Slide5,
     text: "Explore Our Unique Collection of Handcrafted Items.",
   },
   // Add more slides as needed
@@ -21,7 +36,7 @@ const Hero = () => {
   useEffect(() => {
     const slideInterval = setInterval(() => {
       setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 5000); // Change slide every 5 seconds
+    }, 4000);
 
     return () => clearInterval(slideInterval);
   }, []);

@@ -13,6 +13,7 @@ const Products = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const location = useLocation();
+  const imgUrl = import.meta.env.VITE_IMG_URL;
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -61,8 +62,8 @@ const Products = () => {
                   name={product.name}
                   image={
                     product.imgs && product.imgs.includes(",")
-                      ? `http://34.19.111.243/africanvibes/backend/assets/${product.imgs.split(",")[0]}`
-                      : `http://34.19.111.243/africanvibes/backend/assets/${product.imgs || "default-image.jpg"}`
+                      ? `${imgUrl}/${product.imgs.split(",")[0]}`
+                      : `${imgUrl}/${product.imgs}`
                   }
                   price={product.price}
                   id={product.id}
