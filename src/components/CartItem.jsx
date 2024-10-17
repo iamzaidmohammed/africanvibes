@@ -6,6 +6,7 @@ const CartItem = ({ item, onRemove, onQuantityChange }) => {
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(item.quantity);
   const [total, setTotal] = useState(item.total);
+  const imgUrl = import.meta.env.VITE_IMG_URL;
 
   const handleRemoveFromCart = async () => {
     await onRemove(user.id, item.productID);
@@ -25,7 +26,7 @@ const CartItem = ({ item, onRemove, onQuantityChange }) => {
   return (
     <div className="border-b border-gray-300 py-4 flex">
       <img
-        src={`/api/assets/${item.image.split(",")[0]}`}
+        src={`${imgUrl}/${item.image.split(",")[0]}`}
         alt={item.productName}
         className="w-20 h-20 object-cover"
       />

@@ -69,7 +69,7 @@ class Cart extends Dbh
                 JOIN products ON cart_items.product_id = products.product_id
                 LEFT JOIN product_images ON products.product_id = product_images.product_id 
                 WHERE cart.user_id = :userId
-                GROUP BY products.product_id";
+                GROUP BY cart.cart_id, products.product_id, cart_items.quantity, products.product_name, products.price";
         $params = [':userId' => $id];
         return $this->fetchAll($sql, $params);
     }
@@ -92,11 +92,11 @@ class Cart extends Dbh
 
     public function clearCart($cartId)
     {
-        $deleteCart = "DELETE FROM cart WHERE cart_id = :cartId";
-        $deletedCart = $this->execute($deleteCart, [':cartId' => $cartId]);
-
         $deleteCartItems = "DELETE FROM cart_items WHERE cart_id = :cartId";
         $deletedCartItems = $this->execute($deleteCartItems, [':cartId' => $cartId]);
+
+        $deleteCart = "DELETE FROM cart WHERE cart_id = :cartId";
+        $deletedCart = $this->execute($deleteCart, [':cartId' => $cartId]);
 
         return $deletedCart && $deletedCartItems;
     }

@@ -36,7 +36,7 @@ const ProductCard = ({ name, image, price, id /* rating*/ }) => {
   }, [likedProducts, id]);
 
   const handleLike = async () => {
-    const fetchUrl = appEnv === 'local' ? `/api/likes` : `${api}/likes`;
+    const fetchUrl = appEnv === "local" ? `/api/likes` : `${api}/likes`;
     const like = !liked;
     const response = await fetch(fetchUrl, {
       method: "POST",
@@ -99,7 +99,7 @@ ProductCard.propTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   // rating: PropTypes.number.isRequired,
 };
 
